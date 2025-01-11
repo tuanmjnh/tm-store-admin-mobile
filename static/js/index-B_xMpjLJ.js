@@ -1,0 +1,1 @@
+import{_ as r}from"./ErrorTip.vue_vue_type_script_setup_true_lang-DQ_ZESHT.js";import{_ as c,g as e,o as t}from"./index-Bphj8G7B.js";import"./index-CCkMhh6d.js";const n={};function _(s,a){const o=r;return t(),e(o,{type:"500"})}const m=c(n,[["render",_]]);export{m as default};
