@@ -1,0 +1,16 @@
+{
+  "name": "tm-store-quasar",
+  "version": "2.0.4",
+  "description": "TM Store",
+  "productName": "TM Store",
+  "cordovaId": "tm.store.quasar",
+  "capacitorId": "",
+  "author": "tuanmjnh <minhtuan200990@gmail.com>",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

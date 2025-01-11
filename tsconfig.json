@@ -1,0 +1,63 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": false,
+    "jsx": "preserve",
+    "importHelpers": true,
+    "experimentalDecorators": true,
+    "strictFunctionTypes": false,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "allowJs": false,
+    "resolveJsonModule": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    // "verbatimModuleSyntax": true,
+    "lib": [
+      "ESNext",
+      "DOM"
+    ],
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+      "@build/*": [
+        "build/*"
+      ]
+    },
+    "types": [
+      "node",
+      "vite/client",
+      "gapi",
+      "gapi.auth2",
+      "gapi.client",
+      "gapi.client.drive",
+      "google.accounts"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "src/store/index.ts",
+    "vite.config.ts",
+    "src/typings/*.d.ts",
+    "src/typings/auto-imports.d.ts",
+    "src/typings/global.d.ts",
+    "src/typings/app-types.d.ts"
+  ],
+  "exclude": [
+    "dist",
+    "**/*.js",
+    "node_modules"
+  ]
+}
