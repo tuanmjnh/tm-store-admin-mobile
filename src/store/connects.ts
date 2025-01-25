@@ -1,4 +1,4 @@
-import { http } from '@/utils/http-axios'
+import { http } from '@/plugins/http-axios'
 import { ICreated, IResponseList, IResponseItem } from './interfaces/common'
 import { GoogleTokenInfo } from '@/services/google/oauth2'
 

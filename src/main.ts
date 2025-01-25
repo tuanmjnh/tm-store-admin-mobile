@@ -4,9 +4,8 @@ import { i18n } from './i18n'
 import { installPlugins } from './plugins'
 import { installRouter } from '@/router'
 import { installPinia } from '@/store'
-// import Vue3TouchEvents from "vue3-touch-events"
-import Vue3TouchEvents, { type Vue3TouchEventsOptions } from "vue3-touch-events"
-
+// import Vue3TouchEvents from 'vue3-touch-events'
+import Vue3TouchEvents, { type Vue3TouchEventsOptions } from 'vue3-touch-events'
 // import { store } from '@/store'
 import AppVue from './App.vue'
 import AppLoading from './components/AppLoading.vue'
@@ -18,7 +17,7 @@ import { ImagePreview } from 'vant'
 // import presetBuild from '@/presetBuild'
 // normalize.css
 import 'normalize.css/normalize.css'
-// 全局样式
+// Global styles
 import './styles/index.scss'
 // tailwindcss
 import './styles/tailwind.css'

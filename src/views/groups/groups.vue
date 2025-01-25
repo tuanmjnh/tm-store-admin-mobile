@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import treeView from '@/components/tree-view/index.vue'
 import { useGroupStore } from '@/store'
-import { arrayToTree } from "@/utils/tree"
+import { treeLib } from "tm-libs"
 import { $t } from '@/i18n'
 const $route = useRoute()
 const groupStore = useGroupStore()
@@ -37,7 +37,7 @@ const props = withDefaults(
   })
 const treeSelected = ref(props.selected ? props.selected : [])
 const all = computed(() => groupStore.all)
-const items = ref(arrayToTree(all.value.filter(x => x.flag == props.flag && x.type == props.type), { parentProperty: 'parent', customID: '_id', order: 'order' }))
+const items = ref(treeLib.arrayToTree(all.value.filter(x => x.flag == props.flag && x.type == props.type), { parentId: 'parent', id: '_id', order: 'order' }))
 const groupRoot = groupStore.root
 groupRoot.title = $t('group.root', 'Root')
 if (props.root) items.value.unshift(groupRoot)

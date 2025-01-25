@@ -1,8 +1,8 @@
-import { http } from '@/utils/http-axios'
+import { http } from '@/plugins/http-axios'
 import { router } from '@/router'
 // import { local } from '@/utils/storage'
 import { IUser } from './interfaces/user'
-import * as storage from '@/utils/localStorage'
+import { storageLib } from 'tm-libs'
 
 interface IModel {
   userInfo: IUser | null
@@ -13,8 +13,8 @@ const API_PATH = 'auth'
 export const useAuthStore = defineStore('authStore', {
   // persist: true,
   state: (): IModel => ({
-    userInfo: storage.get('user-info'),
-    accessToken: storage.get('access-token') || '',
+    userInfo: storageLib.get('user-info'),
+    accessToken: storageLib.get('access-token') || '',
     routes: []
   }),
   getters: {
@@ -66,18 +66,18 @@ export const useAuthStore = defineStore('authStore', {
       // Save token and userInfo
       if (val.data) {
         this.userInfo = val.data
-        storage.set('user-info', val.data)
+        storageLib.set('user-info', val.data)
       }
       if (val.accessToken) {
         this.accessToken = val.accessToken
-        storage.set('access-token', val.accessToken)
+        storageLib.set('access-token', val.accessToken)
       }
       if (val.routes) {
         this.routes = val.routes
-        storage.set('routes', val.routes)
+        storageLib.set('routes', val.routes)
       }
       if (val.refreshToken) {
-        storage.set('refresh-token', val.refreshToken)
+        storageLib.set('refresh-token', val.refreshToken)
       }
       // Adding Routes and Menus
       // const routeStore = useRouteStore()
@@ -91,10 +91,10 @@ export const useAuthStore = defineStore('authStore', {
       })
     },
     clearAuthStorage() {
-      storage.remove('access-token')
-      storage.remove('refresh-token')
-      storage.remove('user-info')
-      storage.remove('routes')
+      storageLib.remove('access-token')
+      storageLib.remove('refresh-token')
+      storageLib.remove('user-info')
+      storageLib.remove('routes')
       this.accessToken = null
       this.userInfo = null
       this.routes = []

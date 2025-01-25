@@ -1,41 +1,41 @@
-import Layout from "@/layouts/index.vue";
-import type { RouteRecordRaw } from "vue-router";
-import Demo from "@/views/demo/index.vue";
+import Layout from '@/layouts/index.vue'
+import type { RouteRecordRaw } from 'vue-router'
+import Demo from '@/views/demo/index.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: "/",
-    name: "root",
+    path: '/',
+    name: 'root',
     component: Layout,
-    redirect: { name: "Demo" },
+    redirect: { name: 'Demo' },
     children: [
       {
-        path: "demo",
-        name: "Demo",
+        path: 'demo',
+        name: 'Demo',
         component: Demo,
         meta: {
-          title: "主页"
+          title: 'Home'
         }
       },
       {
-        path: "tools",
-        name: "Tools",
-        component: () => import("@/views/tools/index.vue"),
+        path: 'tools',
+        name: 'Tools',
+        component: () => import('@/views/tools/index.vue'),
         meta: {
-          title: "工具"
+          title: 'Tool'
         }
       },
       {
-        path: "about",
-        name: "About",
-        component: () => import("@/views/about/index.vue"),
+        path: 'about',
+        name: 'About',
+        component: () => import('@/views/about/index.vue'),
         meta: {
-          title: "关于",
+          title: 'About',
           noCache: true
         }
       }
     ]
   }
-];
+]
 
-export default routes;
+export default routes

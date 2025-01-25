@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import switchLanguage from "./switchLanguage.vue";
-import switchDarkMode from "./switchDarkMode.vue";
+import switchLanguage from "./switchLanguage.vue"
+import switchDarkMode from "./switchDarkMode.vue"
 import { useAppStore } from '@/store'
 const storeApp = useAppStore()
 const isDialog = ref(false)

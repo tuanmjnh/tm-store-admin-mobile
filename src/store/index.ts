@@ -1,5 +1,5 @@
-import type { App } from "vue";
-import { createPinia } from "pinia";
+import type { App } from 'vue'
+import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 export * from './app'
@@ -13,9 +13,9 @@ export * from './news'
 export * from './products'
 // export * from './tab'
 
-// const store = createPinia();
+// const store = createPinia()
 // store.use(piniaPluginPersistedstate)
-// export { store };
+// export { store }'
 
 // Install the pinia global state library
 export function installPinia(app: App) {

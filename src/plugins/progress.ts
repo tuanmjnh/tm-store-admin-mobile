@@ -1,9 +1,9 @@
-import NProgress from "nprogress";
-import "nprogress/nprogress.css";
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 
 NProgress.configure({
   // Animation mode
-  easing: "ease",
+  easing: 'ease',
   // Speed ​​of the progress bar
   speed: 500,
   // Whether to display the loading ico
@@ -13,7 +13,7 @@ NProgress.configure({
   // Minimum percentage at initialization
   minimum: 0.3,
   // Parent element of the loading bar
-  parent: "body"
+  parent: 'body'
 });
 
-export default NProgress;
+export default NProgress

@@ -1,23 +1,24 @@
-import type { App } from "vue";
-import { createMemoryHistory, createRouter, createWebHashHistory, createWebHistory } from "vue-router";
-// import routes from "./routes";
+import type { App } from 'vue'
+import { createMemoryHistory, createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
+// import routes from './routes'
 import { routes, rootRoute } from './routes.inner'
 import { staticRoutes } from './routes.static'
-import { initMiddleware } from "./middleware";
-import { arrayToTree } from '@/utils/tree'
+import { initMiddleware } from './middleware'
+// import { arrayToTree } from '@tm-utils/tree'
+import { treeLib } from 'tm-libs'
 
 export const isInitAuthRoutes = false
 // console.log(routes)
-// import { useCachedViewStoreHook } from "@/store/modules/cachedView";
-// import NProgress from "@/utils/progress";
-// import setPageTitle from "@/utils/set-page-title";
+// import { useCachedViewStoreHook } from '@/store/modules/cachedView'
+// import NProgress from '@/utils/progress'
+// import setPageTitle from '@/utils/set-page-title'
 const { VITE_APP_SERVER, VITE_APP_ROUTER_MODE, VITE_APP_ROUTER_BASE, VITE_APP_MODE } = import.meta.env
 
 const createHistory = VITE_APP_SERVER ? createMemoryHistory : VITE_APP_ROUTER_MODE == 'history' ? createWebHistory : createWebHashHistory
 // const router = createRouter({
 //   history: createHistory(VITE_APP_MODE === 'ssr' ? void 0 : VITE_APP_ROUTER_BASE),
 //   routes
-// });
+// })
 
 
 const reCreateRouter = () => createRouter({
@@ -32,24 +33,24 @@ const reCreateRouter = () => createRouter({
 
 const router = reCreateRouter()
 
-// initMiddleware(router);
+// initMiddleware(router)
 // export interface toRouteType extends RouteLocationNormalized {
 //   meta: {
-//     title?: string;
-//     noCache?: boolean;
-//   };
+//     title?: string
+//     noCache?: boolean
+//   }
 // }
 
 // router.beforeEach((to: toRouteType, from, next) => {
-//   NProgress.start();
-//   useCachedViewStoreHook().addCachedView(to);
-//   setPageTitle(to.meta.title);
-//   next();
-// });
+//   NProgress.start()
+//   useCachedViewStoreHook().addCachedView(to)
+//   setPageTitle(to.meta.title)
+//   next()
+// })
 
 // router.afterEach(() => {
-//   NProgress.done();
-// });
+//   NProgress.done()
+// })
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 // export const resetRouter = () => {
@@ -72,14 +73,15 @@ export const initAuthRoutes = async (authRoutes: Array<string>) => {
       if (x.meta.requiresAuth) return authRoutes.indexOf(x.name.toString()) > -1
       else return true
     })
-    rootRoute.children = arrayToTree(rs, { parentProperty: 'meta.parent', customID: 'name' })
+    rootRoute.children = treeLib.arrayToTree(rs, { parentId: 'meta.parent', id: 'name' })
     router.addRoute(rootRoute)
     // return rootRoute
+    // console.log(groupByParents(rs, {}))
   }
   return isAppRootRoutes
 }
 
-export const routesTree = arrayToTree(staticRoutes, { parentProperty: 'meta.parent', customID: 'name' })
+export const routesTree = treeLib.arrayToTree(staticRoutes, { parentId: 'meta.parent', id: 'name' })
 
 // Install Vue Router
 export async function installRouter(app: App) {
@@ -94,5 +96,5 @@ export const historyBack = () => {
   else router.replace('/')
 }
 
-export default router;
+export default router
 export { router }

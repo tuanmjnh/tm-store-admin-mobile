@@ -6,7 +6,7 @@ import router from '@/router'
 import delay from 'delay'
 import { $t } from '@/i18n'
 import { useGroupStore } from '@/store'
-import { arrayToTree } from "@/utils/tree"
+import { treeLib } from 'tm-libs'
 const $route = useRoute()
 const groupStore = useGroupStore()
 const filter = ref({
@@ -21,7 +21,7 @@ const optionFlag = [
   { text: $t(`global.inactivite`), value: 0 },
 ]
 const all = computed(() => groupStore.all)
-const items = ref(arrayToTree(all.value.filter(x => x.flag == filter.value.flag && x.type == filter.value.type), { parentProperty: 'parent', customID: '_id', order: 'order' }))
+const items = ref(treeLib.arrayToTree(all.value.filter(x => x.flag == filter.value.flag && x.type == filter.value.type), { parentId: 'parent', id: '_id', order: 'order' }))
 const selected = ref([])
 const isLoading = ref(false)
 const isRefresh = ref(false)

@@ -1,35 +1,35 @@
-import { fileURLToPath, URL } from "node:url"
-import { defineConfig, loadEnv } from "vite"
-import vue from "@vitejs/plugin-vue"
-import vueJsx from "@vitejs/plugin-vue-jsx"
-import Components from "unplugin-vue-components/vite"
+import { fileURLToPath, URL } from 'node:url'
+import { defineConfig, loadEnv } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
+import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
-import { VantResolver } from "unplugin-vue-components/resolvers"
-// import { createSvgIconsPlugin } from "vite-plugin-svg-icons"
+import { VantResolver } from 'unplugin-vue-components/resolvers'
+// import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import Icons from 'unplugin-icons/vite'
 import { FileSystemIconLoader } from 'unplugin-icons/loaders'
 // https://github.com/antfu/unplugin-icons
 import IconsResolver from 'unplugin-icons/resolver'
-import mockDevServerPlugin from "vite-plugin-mock-dev-server"
-import vueSetupExtend from "vite-plugin-vue-setup-extend"
-import viteCompression from "vite-plugin-compression"
-import { createHtmlPlugin } from "vite-plugin-html"
-import { enableCDN } from "./build/cdn"
+// import mockDevServerPlugin from 'vite-plugin-mock-dev-server'
+import vueSetupExtend from 'vite-plugin-vue-setup-extend'
+import viteCompression from 'vite-plugin-compression'
+import { createHtmlPlugin } from 'vite-plugin-html'
+import { enableCDN } from './build/cdn'
 import { VitePWA } from 'vite-plugin-pwa'
 import mkcert from 'vite-plugin-mkcert'
-// 当前工作目录路径
+// The company has a good reputation
 const root: string = process.cwd()
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  // 环境变量
-  const env = loadEnv(mode, root, "")
+  // The company
+  const env = loadEnv(mode, root, '')
   return {
-    base: env.VITE_APP_PUBLIC_PATH || "/",
+    base: env.VITE_APP_ROUTER_BASE || '/',
     plugins: [
       vue(),
       vueJsx(),
-      mockDevServerPlugin(),
+      // mockDevServerPlugin(),
       mkcert(),
       VitePWA({
         registerType: 'autoUpdate',
@@ -72,9 +72,9 @@ export default defineConfig(({ mode }) => {
         dts: 'src/typings/auto-imports.d.ts',
         dirs: ['src/composables']
       }),
-      // vant 组件自动按需引入
+      // vant Components are automatically introduced on demand
       Components({
-        dts: "src/typings/components.d.ts",
+        dts: 'src/typings/components.d.ts',
         resolvers: [
           IconsResolver({
             prefix: false,
@@ -96,29 +96,30 @@ export default defineConfig(({ mode }) => {
       }),
       // // svg icon
       // createSvgIconsPlugin({
-      //   // 指定图标文件夹
-      //   iconDirs: [path.resolve(root, "src/icons/svg")],
-      //   // 指定 symbolId 格式
-      //   symbolId: "icon-[dir]-[name]"
+      //   // Specify the icon folder
+      //   iconDirs: [path.resolve(root, 'src/icons/svg')],
+      //   // Specify symbolId format
+      //   symbolId: 'icon-[dir]-[name]'
       // }),
-      // 允许 setup 语法糖上添加组件名属性
+      //Allow adding component name attribute to setup syntax sugar
       vueSetupExtend(),
-      // 生产环境 gzip 压缩资源
+      //Production environment gzip compressed resources
       viteCompression(),
-      // 注入模板数据
+      //Injecting Template Data
       createHtmlPlugin({
         inject: {
           data: {
-            ENABLE_ERUDA: env.VITE_ENABLE_ERUDA || "false"
+            ENABLE_ERUDA: env.VITE_ENABLE_ERUDA || 'false'
           }
         }
       }),
-      // 生产环境默认不启用 CDN 加速
+      // CDN acceleration is not enabled by default in the production environment
       enableCDN(env.VITE_CDN_DEPS)
     ],
     resolve: {
       alias: {
-        "@": fileURLToPath(new URL("./src", import.meta.url))
+        '@': fileURLToPath(new URL('./src', import.meta.url)),
+        // '@tm-utils': fileURLToPath(new URL('../tm-utils/src', import.meta.url))
       }
     },
     server: {
@@ -138,15 +139,15 @@ export default defineConfig(({ mode }) => {
         }
       },
       headers: {
-        "Cross-Origin-Embedder-Policy": "unsafe-none", // added this part
+        'Cross-Origin-Embedder-Policy': 'unsafe-none', // added this part
       },
     },
     build: {
       rollupOptions: {
         output: {
-          chunkFileNames: "static/js/[name]-[hash].js",
-          entryFileNames: "static/js/[name]-[hash].js",
-          assetFileNames: "static/[ext]/[name]-[hash].[ext]"
+          chunkFileNames: 'static/js/[name]-[hash].js',
+          entryFileNames: 'static/js/[name]-[hash].js',
+          assetFileNames: 'static/[ext]/[name]-[hash].[ext]'
         }
       }
     }

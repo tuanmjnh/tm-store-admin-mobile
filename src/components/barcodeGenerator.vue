@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import JsBarcode from 'jsbarcode'
-import { NewGuid } from '@/utils/tm-crypto'
+import { cryptoLib } from 'tm-libs'
 import { debounce } from 'lodash'
 const emit = defineEmits<{
   (e: 'onInit', values: any): void
@@ -90,7 +90,7 @@ const onCancel = () => {
             d="M4 20h40M6 6v8m0 11.996v12.003M20.4 6v8m0 12v16M34.8 6v8M42 6v8m-7.2 12v8M13.2 6v8m0 12v8M27.6 6v8m0 12v8M42 26v12" />
         </svg>
       </button>
-      <button @click="onGenerator(NewGuid())"
+      <button @click="onGenerator(cryptoLib.NewGuid())"
         class="absolute right-1 top-1 rounded bg-slate-800 p-1 border border-transparent text-center text-xs text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
         type="button">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 48 48">

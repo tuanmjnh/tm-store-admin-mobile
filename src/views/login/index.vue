@@ -12,8 +12,8 @@ const storeAuth = useAuthStore()
 // Data
 const AppName = import.meta.env.VITE_APP_TITLE
 const form = ref({
-  username: '',//'admin',
-  password: '',//'Bk123456@',
+  username: '',
+  password: '',
   remember: true
 })
 const isPassword = ref(true)

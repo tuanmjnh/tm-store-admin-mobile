@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import tmSwipe from './tmSwipe.vue'
-import { lazyLoadImage } from '@/utils/images'
+import { imageLib } from 'tm-libs'
 const emit = defineEmits<{
   (e: 'onSelect', image: any): void
   (e: 'onPreview', image: any): void
@@ -51,10 +51,8 @@ const props = withDefaults(
     swipeReset: false
   })
 
-onMounted(() => { lazyLoadImage('tm-view-list-gallery') })
-watch(() => props.modelValue, n => {
-  lazyLoadImage('tm-view-box-gallery')
-}, { immediate: true, deep: true })
+onMounted(() => { imageLib.lazyLoadImage('tm-view-list-gallery') })
+watch(() => props.modelValue, n => { imageLib.lazyLoadImage('tm-view-box-gallery') }, { immediate: true, deep: true })
 
 const isDialogPreview = ref(false)
 const isDialogDelete = ref(false)
@@ -120,8 +118,7 @@ const onHidePreview = () => {
           <template #content>
             <div class="flex-shrink-0">
               <img class="lazy-image w-8 h-8 rounded-full" :alt="e.alt || e.name" :data-src="e.src || e.thumbnailLink"
-                src="/src/assets/svg/image.svg" onerror="this.src='/src/assets/svg/image.svg'"
-                @click="onShowPreview(e, i)">
+                src="/src/assets/svg/image.svg" @click="onShowPreview(e, i)">
             </div>
             <div class="flex-1 min-w-0">
               <p class="text-sm font-medium text-gray-900 truncate dark:text-white">

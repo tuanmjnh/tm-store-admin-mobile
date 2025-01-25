@@ -2,7 +2,7 @@ import Axios, { type AxiosInstance, type AxiosError, type AxiosResponse, type Ax
 import NProgress from './progress'
 import { showFailToast } from 'vant'
 import { $t } from '@/i18n'
-import * as storage from './localStorage'
+import { storageLib } from 'tm-libs'
 import 'vant/es/toast/style'
 import { useAppStore } from '../store'
 
@@ -55,7 +55,7 @@ class Http {
         // console.log(config)
         // Before sending a request, you can carry a token here
         // Add access-token to headers
-        const accessToken = storage.get('access-token')
+        const accessToken = storageLib.get('access-token')
         if (accessToken) config.headers['x-access-token'] = `Bearer ${accessToken}`
         return config
       },
@@ -95,7 +95,7 @@ class Http {
           case 401:
             message = $t('http.401', 'Unauthorized, please log in')
             // remove storage access-token and refresh page if 401
-            storage.remove('access-token')
+            storageLib.remove('access-token')
             location.reload()
             break
           case 403:

@@ -1,6 +1,6 @@
 import delay from 'delay'
 import { API_KEY, CLIENT_ID } from './gapi-client'
-import { get } from '@/utils/localStorage'
+import { storageLib } from 'tm-libs'
 
 export interface IGoogleFile extends gapi.client.drive.File {
   children?: Array<IGoogleFile>
@@ -29,7 +29,7 @@ export class GoogleDrive {
     this.DEFAULTS.FOLDER_ROOT = args && args.root ? args.root : this.DEFAULTS.FOLDER_ROOT
     this.initialize()
   }
-  public googleConnect = get('connectsStore.google')
+  public googleConnect = storageLib.get('connectsStore.google')
   public DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'
   public SCOPES = ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/drive.metadata.readonly']
   public DEFAULTS = {

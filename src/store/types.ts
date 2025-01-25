@@ -1,4 +1,4 @@
-import { http } from '@/utils/http-axios'
+import { http } from '@/plugins/http-axios'
 import { ICreated, IMeta, IResponseList, IResponseItem, IResponseFlag } from './interfaces/common'
 
 export interface IModelType {

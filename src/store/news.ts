@@ -1,4 +1,4 @@
-import { http } from '@/utils/http-axios'
+import { http } from '@/plugins/http-axios'
 import { ICreated, IResponseList, IResponseItem, IResponseFlag, IMeta } from './interfaces/common'
 import { IGoogleFile } from '@/services/google/drive-gapi'
 export interface IModelNews {

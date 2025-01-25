@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { getFileNameWithoutExtention } from '@/utils/tm-files';
-import { matchUrls } from '@/utils/url';
+import { filesLib, urlsLib } from 'tm-libs'
 
 const props = withDefaults(
   defineProps<{
@@ -25,11 +24,11 @@ const text = ref('')
 
 watch(() => text.value, n => {
   if (n) {
-    const urls = matchUrls(n)
+    const urls = urlsLib.matchUrls(n)
     text.value = urls.join('\n')
     const values = []
     for (const u of urls) {
-      const fileNames = getFileNameWithoutExtention(u)?.split('/')
+      const fileNames = filesLib.getFileNameWithoutExtention(u)?.split('/')
       values.pushIfNotExist({
         src: u,
         name: fileNames[fileNames.length - 1]
@@ -40,7 +39,7 @@ watch(() => text.value, n => {
 }, { immediate: true, deep: true })
 const onChangeValue = (val) => {
   // console.log(matchUrls(val.target.value))
-  emit('update:modelValue', matchUrls(val.target.value))
+  emit('update:modelValue', urlsLib.matchUrls(val.target.value))
 }
 const onSubmit = async () => {
   if (props.modelValue && props.modelValue.length) {
@@ -82,6 +81,6 @@ const onSubmit = async () => {
 
 <style>
 .van-uploader__wrapper {
-  padding-left: 10px;
+  padding-left: 10px
 }
 </style>

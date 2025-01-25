@@ -8,7 +8,7 @@ import { GoogleDrive } from '@/services/google/drive-gapi'
 import componentGroup from "@/views/groups/groups.vue"
 import googleDriveUpload from "@/components/google-drive-upload.vue"
 import vueQrcodeReader from '@/components/vueQrcodeReader.vue'
-import { NewGuid } from '@/utils/tm-crypto'
+import { cryptoLib } from 'tm-libs'
 const componentTypes = defineAsyncComponent(() => import('./types.vue'))
 const googleDrive = defineAsyncComponent(() => import('@/components/google-drive.vue'))
 const uploadImageLinks = defineAsyncComponent(() => import('@/components/upload-image-links.vue'))
@@ -118,7 +118,7 @@ const onQRCodeError = (args) => {
   showNotify({ type: 'danger', message: `[${args.name}] - ${args.value}` })
 }
 const onChangeCode = () => {
-  form.value.code = NewGuid().split('-')[0].toUpperCase()
+  form.value.code = cryptoLib.NewGuid().split('-')[0].toUpperCase()
 }
 const onBack = () => {
   if (props.isDialog) emit('onClose', true)

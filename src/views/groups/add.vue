@@ -23,7 +23,7 @@ const groupParent = ref(groupStore.root)
 watch(() => form.value.parent, n => {
   if (form.value.parent) groupParent.value = groupStore.all.find(x => x._id == form.value.parent)
   else groupParent.value = { ...{}, ...groupStore.root }
-}, { immediate: true,deep:true })
+}, { immediate: true, deep: true })
 
 const onSelectParent = async (arg) => {
   try {
@@ -41,7 +41,7 @@ const onBack = () => {
 const onSubmit = async () => {
   try {
     form.value.parent = groupParent.value._id
-    form.value.type = $route.meta.module
+    form.value.type = $route.meta.module as string
     if (form.value._id) {
       const rs = await groupStore.update(form.value)
       if (rs.data) showNotify({ type: 'success', message: $t('success.update') })
@@ -76,7 +76,8 @@ const onSubmit = async () => {
         :placeholder="$t('global.inputPlaceholder')" :rules="[{ required: true, message: $t('error.required') }]" />
       <van-field v-model="form.order" name="order" :label="$t('global.order')" type="number"
         :placeholder="$t('global.inputPlaceholder')" :rules="[{ required: true, message: $t('error.required') }]" />
-      <van-field v-model="form.icon" name="icon" :label="$t('global.icon')" :placeholder="$t('global.inputPlaceholder')" />
+      <van-field v-model="form.icon" name="icon" :label="$t('global.icon')"
+        :placeholder="$t('global.inputPlaceholder')" />
       <van-field v-model="form.url" name="url" :label="$t('files.url')" :placeholder="$t('global.inputPlaceholder')" />
       <van-field v-model="form.content" name="content" :label="$t('global.content')"
         :placeholder="$t('global.inputPlaceholder')">

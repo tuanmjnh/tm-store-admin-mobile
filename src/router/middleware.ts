@@ -1,9 +1,9 @@
 import type { Router } from 'vue-router'
 // import { useAppStore, useAuthStore } from '@/store'
-// import { local } from '@/utils/storage';
-import * as storage from '@/utils/localStorage'
-import { $t } from '@/i18n';
-import NProgress from "@/utils/progress";
+// import { local } from '@/utils/storage'
+import { storageLib } from 'tm-libs'
+import { $t } from '@/i18n'
+import NProgress from '@/plugins/progress'
 import { initAuthRoutes } from '@/router'
 
 export function initMiddleware(router: Router) {
@@ -16,10 +16,10 @@ export function initMiddleware(router: Router) {
     //   return false
     // }
     // start loadingBar
-    NProgress.start();
+    NProgress.start()
     // local.set('access-token','abc')
     // Determine whether there is a TOKEN and log in for authentication
-    const isLogin = Boolean(storage.get('access-token'))
+    const isLogin = Boolean(storageLib.get('access-token'))
     if (!isLogin) {
       if (to.name === 'login') next()
 
@@ -30,7 +30,7 @@ export function initMiddleware(router: Router) {
       return false
     }
 
-    const isAppRootRoutes = await initAuthRoutes(storage.get('routes'))
+    const isAppRootRoutes = await initAuthRoutes(storageLib.get('routes'))
     // Determine whether the route is initialized
     if (!isAppRootRoutes) {
       // After dynamic routing is loaded, return to the root routing
@@ -64,6 +64,6 @@ export function initMiddleware(router: Router) {
     // Modify the webpage title
     document.title = `${import.meta.env.VITE_APP_NAME} - ${$t(`route.${to.meta.title}`, String(to.name))}`
     // End loadingBar
-    NProgress.done();
+    NProgress.done()
   })
 }

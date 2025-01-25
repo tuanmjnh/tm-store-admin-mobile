@@ -1,5 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router'
-import Layout from "@/layouts/index.vue";
+import Layout from '@/layouts/index.vue'
 const { VITE_APP_HOME_PATH } = import.meta.env
 /* Some fixed routes in the page, error pages, etc. */
 export const rootRoute: RouteRecordRaw = {

@@ -1,10 +1,10 @@
 <script setup lang="ts" name="IIcon">
-import { Icon as IconifyIconComp } from "@iconify/vue";
-import type { IconifyIcon } from "@iconify/vue";
+import { Icon as IconifyIconComp } from "@iconify/vue"
+import type { IconifyIcon } from "@iconify/vue"
 
 const props = defineProps<{
-  icon: string | IconifyIcon;
-}>();
+  icon: string | IconifyIcon
+}>()
 </script>
 
 <template>

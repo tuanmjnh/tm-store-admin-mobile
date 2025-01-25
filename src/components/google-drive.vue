@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { GoogleDrive, IGoogleFile } from '@/services/google/drive-gapi'
-import { lazyLoadImage } from '@/utils/images'
+import { imageLib } from 'tm-libs'
 import delay from 'delay'
 import treeView from './tree-view/index.vue'
 const props = withDefaults(
@@ -67,7 +67,7 @@ const isDialogEditFolder = ref(false)
 const GDrive = new GoogleDrive({ root: props.parent })
 
 const onChangeTab = async (arg) => {
-  if (arg == 'files') lazyLoadImage() //lazyLoad(fileList.value.files, 'thumbnailLink')
+  if (arg == 'files') imageLib.lazyLoadImage() //lazyLoad(fileList.value.files, 'thumbnailLink')
 }
 const onClose = async () => {
   emit('onClose')
@@ -80,7 +80,7 @@ const initFolders = async () => {
     folderId: folders.value && folders.value.length ? folders.value[0].id : null,
     mimeType: GDrive.MIME_TYPE.image
   })
-  lazyLoadImage()//lazyLoad(fileList.value.files, 'thumbnailLink')
+  imageLib.lazyLoadImage()//lazyLoad(fileList.value.files, 'thumbnailLink')
   isLoading.value = false
 }
 initFolders()
@@ -91,7 +91,7 @@ const onGetClickFolder = async (arg) => {
   if (!arg.children) arg.children = await GDrive.GetFolders({ folderId: arg.id })
   await delay(300)
   fileList.value = await GDrive.GetFiles({ folderId: arg.id, mimeType: GDrive.MIME_TYPE.image })
-  lazyLoadImage() //lazyLoad(fileList.value.files.map((x) => x.thumbnailLink))
+  imageLib.lazyLoadImage() //lazyLoad(fileList.value.files.map((x) => x.thumbnailLink))
   isLoading.value = false
 }
 const onEditFolder = async (arg) => {

@@ -1,41 +1,36 @@
 <script setup lang="ts">
-import { isExternal } from "@/utils/validate";
-import { computed } from "vue";
+import { validateLib } from 'tm-libs'
+import { computed } from "vue"
 
 interface Props {
-  name: string;
-  className?: string;
+  name: string
+  className?: string
 }
 const props = withDefaults(defineProps<Props>(), {
   name: "",
   className: ""
-});
+})
 
-const isExternalIcon = computed(() => isExternal(props.name));
-const iconName = computed(() => `#icon-${props.name}`);
+const isExternalIcon = computed(() => validateLib.isExternal(props.name))
+const iconName = computed(() => `#icon-${props.name}`)
 const svgClass = computed(() => {
   if (props.className) {
-    return "svg-icon " + props.className;
+    return "svg-icon " + props.className
   } else {
-    return "svg-icon";
+    return "svg-icon"
   }
-});
-// 外链 icon
+})
+// icon
 const styleExternalIcon = computed(() => {
   return {
     mask: `url(${props.name}) no-repeat 50% 50%`,
     "-webkit-mask": `url(${props.name}) no-repeat 50% 50%`
-  };
-});
+  }
+})
 </script>
 
 <template>
-  <div
-    v-if="isExternalIcon"
-    :style="styleExternalIcon"
-    class="svg-external-icon svg-icon"
-    v-bind="$attrs"
-  />
+  <div v-if="isExternalIcon" :style="styleExternalIcon" class="svg-external-icon svg-icon" v-bind="$attrs" />
   <svg v-else :class="svgClass" aria-hidden="true" v-bind="$attrs">
     <use :xlink:href="iconName" />
   </svg>

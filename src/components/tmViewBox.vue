@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { lazyLoadImage } from '@/utils/images'
+import { imageLib } from 'tm-libs'
 const emit = defineEmits<{
   (e: 'onSelect', value: any): any
   (e: 'onClick', value: any): any
@@ -50,8 +50,8 @@ const props = withDefaults(
     lblCancel: 'Cancel'
   })
 
-onMounted(() => { lazyLoadImage('tm-view-box-gallery') })
-watch(() => props.modelValue, n => { lazyLoadImage('tm-view-box-gallery') }, { immediate: true, deep: true })
+onMounted(() => { imageLib.lazyLoadImage('tm-view-box-gallery') })
+watch(() => props.modelValue, n => { imageLib.lazyLoadImage('tm-view-box-gallery') }, { immediate: true, deep: true })
 
 const isDialogPreview = ref(false)
 const isDialogDelete = ref(false)
@@ -123,7 +123,7 @@ const onHidePreview = () => {
             <img v-if="e.src || e.thumbnailLink" :alt="e.alt || e.name" @click="onToggleSelect(e)"
               :class="['lazy-image block h-full w-full object-cover object-center border-2 border-solid', rounded, height,
                 selected.indexOf(e) > -1 ? 'border-blue-900 dark:border-blue-700 shadow shadow-blue-500/50' : 'border-slate-800/30 dark:border-slate-700']" :data-src="e.src || e.thumbnailLink"
-              onerror="this.src='/src/assets/svg/image.svg'" src="/src/assets/svg/image.svg" />
+              src="/src/assets/svg/image.svg" />
             <!-- <img v-else @click=" onToggleSelect(e)"
             :class="['lazy-image block h-full w-full object-cover object-center border-2 border-solid dark:border-slate-700 border-slate-800/30', rounded, height,
               selected.indexOf(e) > -1 ? 'border-blue-900 dark:border-blue-700 shadow shadow-blue-500/50' : 'border-slate-800/30 dark:border-slate-700']"
@@ -161,8 +161,7 @@ const onHidePreview = () => {
             </div>
             <img v-else-if="e.src || e.thumbnailLink" :alt="e.alt || e.name" @click="onClick(e, i)"
               :class="['lazy-image block h-full w-full object-cover object-center dark:border-slate-700 border-slate-800/30', border, rounded, height]"
-              :data-src="e.src || e.thumbnailLink" src="/src/assets/svg/image.svg"
-              onerror="this.src='/src/assets/svg/image.svg'" />
+              :data-src="e.src || e.thumbnailLink" src="/src/assets/svg/image.svg" />
             <img v-else="e.alt ||e.name" @click="onClick(e, i)"
               :class="['lazy-image block h-full w-full object-cover object-center dark:border-slate-700 border-slate-800/30', border, rounded, height]"
               :data-src="imageError" src="/src/assets/svg/image.svg" />

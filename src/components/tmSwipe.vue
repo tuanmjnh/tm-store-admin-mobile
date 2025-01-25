@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const slots = useSlots();
+const slots = useSlots()
 const emit = defineEmits<{
   (e: 'swipe-left', values: any): void
   (e: 'swipe-right', values: any): void

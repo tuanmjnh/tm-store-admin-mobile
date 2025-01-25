@@ -1,6 +1,6 @@
-import { createMenus, createRoutes, generateCacheRoutes } from '@/utils/router'
+import { createMenus, createRoutes, generateCacheRoutes } from '@/plugins/router'
 import { $t } from '@/i18n'
-import { local } from '@/utils/storage'
+import { storageLib } from 'tm-libs'
 import { router } from '@/router'
 import { staticRoutes } from '@/router/routes.static'
 import { useAuthStore } from '@/store/auth'
@@ -38,7 +38,7 @@ export const useRouteStore = defineStore('route-store', {
 
     async initRouteInfo() {
       if (import.meta.env.VITE_ROUTE_LOAD_MODE === 'dynamic') {
-        const userInfo = local.get('userInfo')
+        const userInfo = storageLib.get('userInfo')
 
         if (!userInfo || !userInfo.id) {
           const authStore = useAuthStore()

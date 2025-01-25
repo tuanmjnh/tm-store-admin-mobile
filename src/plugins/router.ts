@@ -3,8 +3,8 @@ import type { RouteRecordRaw } from 'vue-router'
 import { RouterLink } from 'vue-router'
 import Layout from '@/layouts/index.vue'
 import { $t } from '@/i18n'
-import { arrayToTree } from '@/utils/tree'
-import { renderIcon } from '@/utils/icon'
+import { arrayToTree } from 'tm-libs/tree'
+import { renderIcon } from './icon'
 
 const metaFields: AppRoute.MetaKeys[]
   = ['title', 'icon', 'requiresAuth', 'keepAlive', 'hide', 'order', 'href', 'activeMenu', 'withoutTab', 'pinTab', 'menuType']
@@ -31,8 +31,7 @@ export function createRoutes(routes: AppRoute.RowRoute[]) {
   })
 
   // Generate route tree
-  resultRouter = arrayToTree(resultRouter, { parentProperty: 'parent', customID: 'name' }) as AppRoute.Route[]
-
+  resultRouter = arrayToTree(resultRouter, { parentId: 'parent', id: 'name' }) as AppRoute.Route[]
   // const appRootRoute: RouteRecordRaw = {
   //   path: '/appRoot',
   //   name: 'appRoot',
@@ -94,7 +93,7 @@ export function createMenus(userRoutes: AppRoute.RowRoute[]) {
   const visibleMenus = resultMenus.filter(route => !route.meta.hide)
 
   // generate side menu
-  return arrayToTree(transformAuthRoutesToMenus(visibleMenus), { parentProperty: 'parent', customID: 'name' }) //arrayToTree(transformAuthRoutesToMenus(visibleMenus))
+  return arrayToTree(transformAuthRoutesToMenus(visibleMenus), { parentId: 'parent', id: 'name' }) //arrayToTree(transformAuthRoutesToMenus(visibleMenus))
 }
 
 // render the returned routing table as a sidebar
@@ -113,27 +112,27 @@ function transformAuthRoutesToMenus(userRoutes: AppRoute.Route[]) {
       else return 0
     })
 
-    // Convert to side menu data structure
-    // .map((item) => {
-    //   const target: MenuOption = {
-    //     id: item.id,
-    //     pid: item.pid,
-    //     label:
-    //       (!item.meta.menuType || item.meta.menuType === 'page')
-    //         ? () =>
-    //           h(
-    //             RouterLink,
-    //             {
-    //               to: {
-    //                 path: item.path,
-    //               },
-    //             },
-    //             { default: () => $t(`route.${String(item.name)}`, item.meta.title) },
-    //           )
-    //         : () => $t(`route.${String(item.name)}`, item.meta.title),
-    //     key: item.path,
-    //     icon: item.meta.icon ? renderIcon(item.meta.icon) : undefined,
-    //   }
-    //   return target
-    // })
+  // Convert to side menu data structure
+  // .map((item) => {
+  //   const target: MenuOption = {
+  //     id: item.id,
+  //     pid: item.pid,
+  //     label:
+  //       (!item.meta.menuType || item.meta.menuType === 'page')
+  //         ? () =>
+  //           h(
+  //             RouterLink,
+  //             {
+  //               to: {
+  //                 path: item.path,
+  //               },
+  //             },
+  //             { default: () => $t(`route.${String(item.name)}`, item.meta.title) },
+  //           )
+  //         : () => $t(`route.${String(item.name)}`, item.meta.title),
+  //     key: item.path,
+  //     icon: item.meta.icon ? renderIcon(item.meta.icon) : undefined,
+  //   }
+  //   return target
+  // })
 }
