@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import tabBarView from "@/components/tabBarView.vue"
 import { GoogleOAuthSignIn } from '@/services/google/oauth2'
-import { useAppStore, useConnectsStore } from '@/store'
+import { useAuthStore, useAppStore, useConnectsStore } from '@/store'
 import { $t } from '@/i18n'
 import svgImage from '@/components/svgImage.vue'
+const authStore = useAuthStore()
 const appStore = useAppStore()
 const connectsStore = useConnectsStore()
 const connects = computed(() => connectsStore.$state)//ref(typeStore.getByKey('connect'))
@@ -28,7 +29,7 @@ const onConfirmRemove = (args) => {
 </script>
 <template>
   <van-cell-group>
-    <van-cell v-for=" (e, i) in connects" :key="i" :title="e.name" :label="e.profile?.name" is-link
+    <van-cell v-for="(e, i) in connects" :key="i" :title="e.name" :label="e.profile?.name" is-link
       @click="onConnects(e)">
       <template v-if="!e.access_token" #right-icon>
         <van-loading v-if="appStore.loading.post" size="20" color="#1989fa" />

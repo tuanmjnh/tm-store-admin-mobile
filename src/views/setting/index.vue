@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { useAppStore } from '@/store'
+import { useAuthStore, useAppStore } from '@/store'
 import { languages } from '@/i18n'
+const authStore = useAuthStore()
 const storeApp = useAppStore()
 const isDialogLanguage = ref(false)
 
@@ -31,7 +32,8 @@ const languge = computed(() => {
     </van-cell>
     <van-cell :title="$t('setting.title')" :value="languge.label" is-link
       @click="isDialogLanguage = !isDialogLanguage" />
-    <van-cell :title="$t('global.connect')" @click="$router.push('connect')" is-link />
+    <van-cell v-if="authStore.routes.includes('connect')" :title="$t('global.connect')" @click="$router.push('connect')"
+      is-link />
   </van-cell-group>
   <van-action-sheet v-model:show="isDialogLanguage" :cancel-text="$t('global.cancel')"
     :description="$t('setting.switchTitle')" close-on-click-action>

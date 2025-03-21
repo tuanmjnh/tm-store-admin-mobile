@@ -181,7 +181,7 @@
   "navbar": {
     "dashboard": "Dashboard",
     "github": "Github",
-    "logOut": "Đăng xuất",
+    "logout": "Đăng xuất",
     "profile": "Hồ sơ cá nhân",
     "theme": "Chủ đề",
     "size": "Kích thước chữ",
@@ -577,6 +577,9 @@
     "setting": "Cài đặt hệ thống",
     "accountSetting": "Cài đặt người dùng",
     "profile": "Hồ sơ",
+    "infomation": "Thông tin",
+    "security": "Bảo mật",
+    "changePassword": "Thay đổi mật khẩu",
     "search": "Tìm kiếm",
     "about": "Về",
     "types": "Thuộc tính",

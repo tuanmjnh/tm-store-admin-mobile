@@ -7,6 +7,7 @@ declare global {
     toUpperCaseFirst(): string;
     toUpperCaseSpace(): string;
     splitBrackets(include?: boolean): Array<string> | null;
+    format(...replacements: string[]): string;
   }
   interface Number {
     formatFileSize(si: boolean, dp: number): string;
@@ -87,6 +88,13 @@ String.prototype.splitBrackets = function (include?) {
 //   if (!this) return this
 //   return moment(this).format(format)
 // }
+// First, checks if it isn't implemented yet.
+String.prototype.format = function () {
+  var args = arguments
+  return this.replace(/{(\d+)}/g, function (match, number) {
+    return typeof args[number] != 'undefined' ? args[number] : match
+  })
+}
 
 // Number
 Number.prototype.formatFileSize = function (si = true, dp = 1) {

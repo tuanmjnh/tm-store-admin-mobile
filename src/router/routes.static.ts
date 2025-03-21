@@ -42,6 +42,45 @@ export const staticRoutes: RouteRecordRaw[] = [
     }
   },
   {
+    name: 'profile-infomation',
+    path: '/profile/infomation',
+    component: () => import('@/views/profile/infomation.vue'),
+    meta: {
+      title: 'infomation',
+      requiresAuth: false,
+      icon: 'icon-park-outline:address-book',
+      menuType: 'page',
+      parent: 'profile',
+      level: 2,
+    }
+  },
+  {
+    name: 'profile-security',
+    path: '/profile/security',
+    component: () => import('@/views/profile/security.vue'),
+    meta: {
+      title: 'security',
+      requiresAuth: false,
+      icon: 'icon-park-outline:shield',
+      menuType: 'page',
+      parent: 'profile',
+      level: 2,
+    }
+  },
+  {
+    name: 'profile-security-change-password',
+    path: '/profile/security/change-password',
+    component: () => import('@/views/profile/change-password.vue'),
+    meta: {
+      title: 'changePassword',
+      requiresAuth: false,
+      icon: 'icon-park-outline:shield',
+      menuType: 'page',
+      parent: 'profile-security',
+      level: 3,
+    }
+  },
+  {
     name: 'setting',
     path: '/setting',
     component: () => import('@/views/setting/index.vue'),

@@ -15,7 +15,7 @@ export const useAuthStore = defineStore('authStore', {
   state: (): IModel => ({
     userInfo: storageLib.get('user-info'),
     accessToken: storageLib.get('access-token') || '',
-    routes: []
+    routes: storageLib.get('routes') || []
   }),
   getters: {
     /** Are you logged in? */

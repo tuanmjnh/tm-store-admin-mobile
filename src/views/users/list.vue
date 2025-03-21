@@ -2,7 +2,9 @@
 import tabBarView from "@/components/tabBarView.vue"
 import router from '@/router'
 import delay from 'delay'
+import { Icon } from '@iconify/vue'
 import { $t } from '@/i18n'
+import { showNotify } from 'vant'
 import { useUserStore } from '@/store'
 const userStore = useUserStore()
 const filter = ref({
@@ -23,6 +25,7 @@ const isFinished = ref(false)
 const isRefresh = ref(false)
 const isShowFilter = ref(false)
 const isShowDelete = ref(false)
+const isShowResetPassword = ref(false)
 const onFetch = async () => {
   //Check pull refresh
   await delay(600)
@@ -36,7 +39,6 @@ const onFetch = async () => {
   items.value = items.value.concat(data)
   filter.value.page++
   isLoading.value = false
-
   //Load all row Finished
   if (items.value.length >= rowsNumber || !data.length) isFinished.value = true
 }
@@ -58,6 +60,16 @@ const onAdd = async () => {
 const onEdit = async (item) => {
   await userStore.setItem(item)
   router.push(`edit/${item._id}`)
+}
+const onResetPassword = async (item) => {
+  await userStore.setItem(item)
+  isShowResetPassword.value = true
+}
+const onConfigResetPassword = async (item) => {
+  await userStore.resetPassword(userStore.item).then((x: any) => {
+    isShowResetPassword.value = false
+    if (x.data && x.newPassword) showNotify({ type: 'success', message: $t('user.msgResetPassword', { username: x.data.username, password: x.newPassword }) })
+  })
 }
 const onToggleFlag = async (item) => {
   selected.value = [toRaw(item)]
@@ -93,6 +105,11 @@ const onGetRoles = (item) => {
         </van-cell>
         <template #right>
           <van-button square icon="edit" type="success" @click="onEdit(item)" />
+          <van-button square icon="key" type="warning" @click="onResetPassword(item)">
+            <template #icon>
+              <Icon icon="icon-park-outline:key-two" class="van-badge__wrapper van-icon van-cell__left-icon" />
+            </template>
+          </van-button>
           <van-button v-if="filter.enable" square icon="close" type="danger" @click="onToggleFlag(item)" />
           <van-button v-else square icon="replay" type="warning" @click="onToggleFlag(item)" />
         </template>
@@ -123,6 +140,8 @@ const onGetRoles = (item) => {
   <van-action-sheet v-model:show="isShowDelete" :cancel-text="$t('global.cancel')" close-on-click-action
     :actions="[{ name: filter.enable ? $t('global.delete') : $t('global.recover'), color: filter.enable ? '#f56c6c' : '#e6a23c' }]"
     @select="onConfirmFlag">
-    <!-- <van-cell :title="$t('global.accept')" /> -->
+  </van-action-sheet>
+  <van-action-sheet v-model:show="isShowResetPassword" :cancel-text="$t('global.cancel')" close-on-click-action
+    :actions="[{ name: $t('user.resetPassword'), color: '#f56c6c' }]" @select="onConfigResetPassword">
   </van-action-sheet>
 </template>

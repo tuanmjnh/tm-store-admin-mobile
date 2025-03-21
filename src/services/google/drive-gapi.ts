@@ -81,7 +81,7 @@ export class GoogleDrive {
     image: 'image'
   }
   private getThumbnail = (files) => {
-    console.log(files)
+    // console.log(files)
     for (const f of files) {
       f.src = `https://drive.google.com/thumbnail?id=${f.id}`
       f.direct = `https://drive.google.com/thumbnail?id=${f.id}`
