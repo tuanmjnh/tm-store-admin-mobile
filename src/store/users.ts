@@ -104,6 +104,12 @@ export const useUserStore = defineStore('userStore', {
         return rs
       } catch (e) { throw e }
     },
+    async changePassword(arg?: any) {
+      try {
+        const rs: IResponseItem = await http.axiosInstance.put(`/${API_PATH}/change-password`, arg)
+        return rs
+      } catch (e) { throw e }
+    },
     async updateFlag(arg?: any) {
       try {
         const rs: IResponseFlag = await http.axiosInstance.patch(`/${API_PATH}`, arg)

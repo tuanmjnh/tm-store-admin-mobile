@@ -20,4 +20,10 @@ const userInfo = computed(() => authStore.userInfo || {} as any)
       </template>
     </van-cell>
   </van-cell-group>
+  <tab-bar-view>
+    <template #item>
+      <van-tabbar-item />
+      <van-tabbar-item />
+    </template>
+  </tab-bar-view>
 </template>

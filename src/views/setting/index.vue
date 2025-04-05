@@ -35,6 +35,12 @@ const languge = computed(() => {
     <van-cell v-if="authStore.routes.includes('connect')" :title="$t('global.connect')" @click="$router.push('connect')"
       is-link />
   </van-cell-group>
+  <tab-bar-view>
+    <template #item>
+      <van-tabbar-item />
+      <van-tabbar-item />
+    </template>
+  </tab-bar-view>
   <van-action-sheet v-model:show="isDialogLanguage" :cancel-text="$t('global.cancel')"
     :description="$t('setting.switchTitle')" close-on-click-action>
     <van-cell-group inset>

@@ -2,7 +2,6 @@
 import { useAppStore, useTypeStore, useRoleStore, useUserStore } from '@/store'
 import { historyBack } from '@/router'
 import { $t } from '@/i18n'
-import { showImagePreview } from 'vant'
 import { showNotify } from 'vant'
 import { GoogleDrive } from '@/services/google/drive-gapi'
 // const tmFileList = defineAsyncComponent(() => import('@/components/tm-file-list/index.vue'))
@@ -24,6 +23,7 @@ const genders = ref(
   })
 )
 const form = computed(() => userStore.item)
+const isPassword = ref(true)
 const formDate = ref({
   dateBirth: [],
   lastLogin: [],
@@ -62,7 +62,6 @@ const onConfirmDatePicker = ({ selectedValues }) => {
   showDatePicker.value = false
 }
 const onSubmit = async () => {
-  console.log(form.value)
   // window.$notify("abc")
   try {
     if (form.value._id) {
@@ -139,8 +138,18 @@ const onSelectDriveImage = (arg) => {
     <van-tabs v-model:active="active">
       <van-tab :title="$t('tabs.basicInf')" name="basicInf">
         <van-cell-group inset>
-          <van-field v-model="form.username" name="username" :label="$t('user.username')" disabled
+          <van-field v-model="form.username" name="username" :label="$t('user.username')" :readonly="!!form._id"
             :placeholder="$t('global.inputPlaceholder')" :rules="[{ required: true, message: $t('error.required') }]" />
+          <van-field v-if="!form._id" v-model="form.password" name="password" :label="$t('user.password')"
+            :type="isPassword ? 'password' : 'text'" :rules="[
+              { required: true, message: $t('error.required') },
+              { validator: (v) => v.length > 5, message: $t('user.msgPasswordLength', { min: 5 }) }
+            ]">
+            <template #right-icon>
+              <van-icon v-if="isPassword" name="closed-eye" @click="isPassword = false" />
+              <van-icon v-else name="eye-o" @click="isPassword = true" />
+            </template>
+          </van-field>
           <van-field v-model="form.fullName" name="fullName" :label="$t('user.fullName')"
             :placeholder="$t('global.inputPlaceholder')" :rules="[{ required: true, message: $t('error.required') }]" />
           <van-field is-link readonly name="dateBirth" :label="$t('user.dateBirth')"
@@ -162,7 +171,7 @@ const onSelectDriveImage = (arg) => {
           <van-field is-link readonly name="gender" :label="$t('user.gender')"
             :placeholder="$t('global.inputPlaceholder')" @click="showGender = true">
             <template #input>
-              {{ genders?.find((x) => x.value == form.gender)?.text }}
+              {{genders?.find((x) => x.value == form.gender)?.text}}
             </template>
           </van-field>
           <van-field name="verified" :label="$t('user.verified')" :placeholder="$t('global.inputPlaceholder')">

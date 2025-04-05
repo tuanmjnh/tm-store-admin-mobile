@@ -50,8 +50,9 @@ export const staticRoutes: RouteRecordRaw[] = [
       requiresAuth: false,
       icon: 'icon-park-outline:address-book',
       menuType: 'page',
-      parent: 'profile',
+      parent: null,//'profile',
       level: 2,
+      hide: true
     }
   },
   {
@@ -63,8 +64,9 @@ export const staticRoutes: RouteRecordRaw[] = [
       requiresAuth: false,
       icon: 'icon-park-outline:shield',
       menuType: 'page',
-      parent: 'profile',
+      parent: null,//'profile',
       level: 2,
+      hide: true
     }
   },
   {
@@ -76,8 +78,9 @@ export const staticRoutes: RouteRecordRaw[] = [
       requiresAuth: false,
       icon: 'icon-park-outline:shield',
       menuType: 'page',
-      parent: 'profile-security',
+      parent: null,//'profile-security',
       level: 3,
+      hide: true
     }
   },
   {

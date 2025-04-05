@@ -256,6 +256,8 @@
     "changePassword": "Thay đổi mật khẩu",
     "resetPassword": "Đặt lại mật khẩu",
     "msgResetPassword": "Mật khẩu mới của tài khoản {username}: {password}",
+    "msgPasswordLength": "Mật khẩu phải lớn hơn {min} ký tự",
+    "msgNewPassword": "Mật khẩu mới phải khác mật khẩu cũ",
     "msgNewRePassword": "Mật khẩu mới chưa chính xác",
     "information": "Thông tin tài khoản",
     "securityCheck": "Kiểm tra bảo mật",
