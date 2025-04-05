@@ -18,7 +18,6 @@ declare module 'vue' {
     GoogleDrive: typeof import('./../components/google-drive.vue')['default']
     GoogleDriveUpload: typeof import('./../components/google-drive-upload.vue')['default']
     Html5qrcode: typeof import('./../components/html5qrcode.vue')['default']
-    Icon: typeof import('~icons/ic/on')['default']
     IconParkOutlineApplicationMenu: typeof import('~icons/icon-park-outline/application-menu')['default']
     IconParkOutlineMoon: typeof import('~icons/icon-park-outline/moon')['default']
     IconParkOutlineSetting: typeof import('~icons/icon-park-outline/setting')['default']
