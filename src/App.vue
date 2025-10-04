@@ -7,7 +7,7 @@ const typeStore = useTypeStore()
 const groupStore = useGroupStore()
 const connectsStore = useConnectsStore()
 onMounted(() => {
-  if (authStore.accessToken) {
+  if (authStore.token) {
     // types
     const typeStoreAll = storageLib.get('typeStore.all')
     if (!typeStoreAll || !typeStoreAll.length) typeStore.getAll()

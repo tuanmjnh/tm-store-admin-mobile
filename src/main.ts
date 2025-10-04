@@ -2,8 +2,8 @@ import type { App } from 'vue'
 import { createApp } from 'vue'
 import { i18n } from './i18n'
 import { installPlugins } from './plugins'
-import { installRouter } from '@/router'
-import { installPinia } from '@/store'
+import { installRouter } from '@src/router'
+import { installPinia } from '@src/store'
 // import Vue3TouchEvents from 'vue3-touch-events'
 import Vue3TouchEvents, { type Vue3TouchEventsOptions } from 'vue3-touch-events'
 // import { store } from '@/store'
@@ -19,8 +19,6 @@ import { ImagePreview } from 'vant'
 import 'normalize.css/normalize.css'
 // Global styles
 import './styles/index.scss'
-// tailwindcss
-import './styles/tailwind.css'
 // svg icon
 // import 'virtual:svg-icons-register'
 

@@ -1,6 +1,5 @@
-import { http } from '@/plugins/http-axios'
-import { ICreated, IResponseList, IResponseItem } from './interfaces/common'
-import { GoogleTokenInfo } from '@/services/google/oauth2'
+import { http } from '@src/plugins/http-axios'
+import { GoogleTokenInfo } from '@src/services/google/oauth2'
 
 export interface IModelConnectProfile {
   email?: string
@@ -12,29 +11,18 @@ export interface IModelConnectProfile {
   iat?: number
   exp?: number
 }
-export interface IModelConnect {
-  _id?: string
-  name: string
-  key: string
-  access_token?: string
-  profile?: IModelConnectProfile
-  config?: string
-  order?: number
-  flag?: number
-  created?: ICreated
-}
 
 const API_PATH = 'connects'
 export const useConnectsStore = defineStore('connectsStore', {
   persist: true,
   state: (): {
-    google: IModelConnect
-    facebook: IModelConnect
-    tiktok: IModelConnect
+    google: Models.IConnect
+    facebook: Models.IConnect
+    tiktok: Models.IConnect
   } => ({
-    google: { key: 'google', name: 'Google', profile: {} },
-    facebook: { key: 'facebook', name: 'Facebook', profile: {} },
-    tiktok: { key: 'tiktok', name: 'Tiktok', profile: {} },
+    google: { key: 'google', title: 'Google', profile: {}, sort: 1, flag: 1 },
+    facebook: { key: 'facebook', title: 'Facebook', profile: {}, sort: 2, flag: 1 },
+    tiktok: { key: 'tiktok', title: 'Tiktok', profile: {}, sort: 3, flag: 1 },
   }),
   getters: {
   },
@@ -49,23 +37,23 @@ export const useConnectsStore = defineStore('connectsStore', {
         }
       } catch (e) { throw e }
     },
-    async googleGetAuth(arg?: any): Promise<IResponseList> {
+    async googleGetAuth(arg?: any): Promise<Common.IResponseItems> {
       try {
-        const rs: IResponseList = await http.axiosInstance.get(`/${API_PATH}/google`, { params: arg })
+        const rs: Common.IResponseItems = await http.get(`/${API_PATH}/google`, { params: arg })
+        this.google = rs.data.items
+        return rs
+      } catch (e) { throw e }
+    },
+    async googleAuthByCode(arg?: any): Promise<Common.IResponseItems> {
+      try {
+        const rs: Common.IResponseItems = await http.post(`/${API_PATH}/google`, arg)
         this.google = rs.data
         return rs
       } catch (e) { throw e }
     },
-    async googleAuthByCode(arg?: any): Promise<IResponseList> {
+    async googleRemoveAuth(arg?: any): Promise<Common.IResponseItems> {
       try {
-        const rs: IResponseList = await http.axiosInstance.post(`/${API_PATH}/google`, arg)
-        this.google = rs.data
-        return rs
-      } catch (e) { throw e }
-    },
-    async googleRemoveAuth(arg?: any): Promise<IResponseList> {
-      try {
-        const rs: IResponseList = await http.axiosInstance.patch(`/${API_PATH}/google`, arg)
+        const rs: Common.IResponseItems = await http.patch(`/${API_PATH}/google`, arg)
         if (rs.status) {
           this.google.access_token = null
           this.google.profile = null
@@ -73,16 +61,16 @@ export const useConnectsStore = defineStore('connectsStore', {
         return rs
       } catch (e) { throw e }
     },
-    async googleSetClientID(arg?: any): Promise<IResponseList> {
+    async googleSetClientID(arg?: any): Promise<Common.IResponseItems> {
       try {
-        const rs: IResponseList = await http.axiosInstance.put(`/${API_PATH}/google`, arg)
+        const rs: Common.IResponseItems = await http.put(`/${API_PATH}/google`, arg)
         this.google = rs.data
         return rs
       } catch (e) { throw e }
     },
-    async googleRemoveClientID(arg?: any): Promise<IResponseList> {
+    async googleRemoveClientID(arg?: any): Promise<Common.IResponseItems> {
       try {
-        const rs: IResponseList = await http.axiosInstance.delete(`/${API_PATH}/google`, arg)
+        const rs: Common.IResponseItems = await http.delete(`/${API_PATH}/google`, arg)
         if (rs.status) {
           this.google.access_token = null
           this.google.profile = null

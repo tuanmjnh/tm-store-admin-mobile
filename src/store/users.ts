@@ -1,31 +1,5 @@
-import { http } from '@/plugins/http-axios'
-import { ICreated, IResponseList, IResponseItem, IResponseFlag } from './interfaces/common'
-import { IGoogleFile } from '@/services/google/drive-gapi'
-
-export interface IModelUser {
-  _id?: string
-  username: string
-  password: string
-  group: string
-  salt: string
-  fullName: string
-  email: string
-  phone: string
-  personNumber: string
-  region: string
-  avatar: Array<IGoogleFile>
-  note: string
-  dateBirth: Date,
-  gender: string
-  address: string
-  roles: Array<string>
-  userRoles: Array<any>
-  verified: boolean
-  enable: boolean
-  lastLogin: Date,
-  lastChangePass: Date,
-  created: ICreated
-}
+import { http } from '@src/plugins/http-axios'
+import { IGoogleFile } from '@src/services/google/drive-gapi'
 
 const constant = {
   group: null,
@@ -53,8 +27,8 @@ const API_PATH = 'users'
 export const useUserStore = defineStore('userStore', {
   persist: false,
   state: (): {
-    items: IModelUser[]
-    item: IModelUser
+    items: Models.IUser[]
+    item: Models.IUser
     // metaKeys: []
     // metaValues: []
   } => ({
@@ -64,62 +38,62 @@ export const useUserStore = defineStore('userStore', {
   getters: {
   },
   actions: {
-    async getAll(arg?: any): Promise<IResponseList> {
+    async getAll(arg?: any): Promise<Common.IResponseItems> {
       try {
-        const rs: IResponseList = await http.axiosInstance.get(`/${API_PATH}/all`, { params: arg })
-        this.all = rs.data as IModelUser[]
+        const rs: Common.IResponseItems = await http.get(`/${API_PATH}/all`, { params: arg })
+        this.all = rs.data.items as Models.IUser[]
         return rs
       } catch (e) { throw e }
     },
-    async getItems(arg?: any): Promise<IResponseList> {
+    async getItems(arg?: any): Promise<Common.IResponseItems> {
       try {
-        const rs: IResponseList = await http.axiosInstance.get(`/${API_PATH}`, { params: arg })
+        const rs: Common.IResponseItems = await http.get(`/${API_PATH}`, { params: arg })
         this.items = rs.data
-        this.rowsNumber = rs.rowsNumber
+        // this.rowsNumber = rs.rowsNumber
         return rs
       } catch (e) { throw e }
     },
-    async getItem(arg?: any): Promise<IResponseList> {
+    async getItem(arg?: any): Promise<Common.IResponseItems> {
       try {
-        const rs: IResponseList = await http.axiosInstance.get(`/${API_PATH}/${arg.id}`, { params: arg })
+        const rs: Common.IResponseItems = await http.get(`/${API_PATH}/${arg.id}`, { params: arg })
         this.item = rs.data
         return rs
       } catch (e) { throw e }
     },
     async create(arg?: any) {
       try {
-        const rs: IResponseItem = await http.axiosInstance.post(`/${API_PATH}`, arg)
+        const rs: Common.IResponseItem = await http.post(`/${API_PATH}`, arg)
         return rs
       } catch (e) { throw e }
     },
     async update(arg?: any) {
       try {
-        const rs: IResponseItem = await http.axiosInstance.put(`/${API_PATH}`, arg)
+        const rs: Common.IResponseItem = await http.put(`/${API_PATH}`, arg)
         return rs
       } catch (e) { throw e }
     },
     async resetPassword(arg?: any) {
       try {
-        const rs: IResponseItem = await http.axiosInstance.put(`/${API_PATH}/reset-password`, arg)
+        const rs: Common.IResponseItem = await http.put(`/${API_PATH}/reset-password`, arg)
         return rs
       } catch (e) { throw e }
     },
     async changePassword(arg?: any) {
       try {
-        const rs: IResponseItem = await http.axiosInstance.put(`/${API_PATH}/change-password`, arg)
+        const rs: Common.IResponseItem = await http.put(`/${API_PATH}/change-password`, arg)
         return rs
       } catch (e) { throw e }
     },
     async updateFlag(arg?: any) {
       try {
-        const rs: IResponseFlag = await http.axiosInstance.patch(`/${API_PATH}`, arg)
+        const rs: Common.IResponseArray = await http.patch(`/${API_PATH}`, arg)
         return rs
       } catch (e) { throw e }
     },
     async setItem(arg?: any) {
       this.item = arg ? { ...arg } : JSON.parse(JSON.stringify(constant))
     },
-    async addItems(arg: any, items?: IModelUser[]) {
+    async addItems(arg: any, items?: Models.IUser[]) {
       try {
         if (items) {
           if (Array.isArray(arg)) this.items.concat(arg)
@@ -130,7 +104,7 @@ export const useUserStore = defineStore('userStore', {
         }
       } catch (e) { throw e }
     },
-    async updateItems(arg: any, items?: IModelUser[]) {
+    async updateItems(arg: any, items?: Models.IUser[]) {
       try {
         if (Array.isArray(arg)) {
           arg.forEach(e => {
@@ -148,7 +122,7 @@ export const useUserStore = defineStore('userStore', {
         }
       } catch (e) { throw e }
     },
-    async removeItems(arg: any, items?: IModelUser[]) {
+    async removeItems(arg: any, items?: Models.IUser[]) {
       try {
         if (Array.isArray(arg)) {
           arg.forEach(e => {

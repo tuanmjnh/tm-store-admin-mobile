@@ -1,29 +1,5 @@
-import { http } from '@/plugins/http-axios'
-import { ICreated, IResponseList, IResponseItem, IResponseFlag, IMeta } from './interfaces/common'
-import { IGoogleFile } from '@/services/google/drive-gapi'
-export interface IModelGroup {
-  _id?: string
-  type: string
-  parent: string
-  code: string
-  title: string
-  desc: string
-  level: number
-  content: string
-  url: string
-  images: Array<IGoogleFile>
-  quantity: number
-  position: Array<string>
-  tags: Array<string>
-  icon: string
-  color: string
-  meta: Array<IMeta>
-  startAt: Date
-  endAt: Date
-  order: number
-  flag: number
-  created: ICreated
-}
+import { http } from '@src/plugins/http-axios'
+import { IGoogleFile } from '@src/services/google/drive-gapi'
 
 const constant = {
   type: null,
@@ -52,10 +28,10 @@ const API_PATH = 'groups'
 export const useGroupStore = defineStore('groupStore', {
   persist: true,
   state: (): {
-    all: IModelGroup[]
-    items: IModelGroup[]
-    item: IModelGroup,
-    root: IModelGroup
+    all: Models.IGroup[]
+    items: Models.IGroup[]
+    item: Models.IGroup,
+    root: Models.IGroup
     // metaKeys: []
     // metaValues: []
   } => ({
@@ -64,14 +40,15 @@ export const useGroupStore = defineStore('groupStore', {
     item: JSON.parse(JSON.stringify(constant)),
     root: {
       _id: null,
-      type: null,
-      parent: null,
+      key: null,
       code: null,
+      parent: null,
       title: 'Root',//$t('group.root'),//'Root'
       desc: null,
       level: 0,
       content: null,
       url: null,
+      image: null,
       images: null,
       quantity: null,
       position: null,
@@ -79,65 +56,64 @@ export const useGroupStore = defineStore('groupStore', {
       icon: 'spa',
       color: null,
       meta: null,
-      startAt: null,
-      endAt: null,
-      order: 0,
+      time: null,
+      sort: 0,
       flag: 1,
       created: { at: null, by: null, ip: null }
     }
   }),
   getters: {
     getByType: (state) => {
-      return (type) => state.all.filter(x => x.type == type).sort((a, b) => { return a.order - b.order })
+      return (key) => state.all.filter(x => x.key == key).sort((a, b) => { return a.sort - b.sort })
     }
   },
   actions: {
-    async getAll(arg?: any): Promise<IResponseList> {
+    async getAll(arg?: any): Promise<Common.IResponseItems> {
       try {
-        const rs: IResponseList = await http.axiosInstance.get(`/${API_PATH}/all`, { params: arg })
-        this.all = rs.data.sort((a, b) => { return a.order - b.order }) as IModelGroup[]
+        const rs: Common.IResponseItems = await http.get(`/${API_PATH}/all`, { params: arg })
+        this.all = rs.data.items.sort((a, b) => { return a.order - b.order }) as Models.IGroup[]
         return rs
       } catch (e) { throw e }
     },
-    async getItems(arg?: any): Promise<IResponseList> {
+    async getItems(arg?: any): Promise<Common.IResponseItems> {
       try {
-        const rs: IResponseList = await http.axiosInstance.get(`/${API_PATH}`, { params: arg })
-        this.items = rs.data
-        this.rowsNumber = rs.rowsNumber
+        const rs: Common.IResponseItems = await http.get(`/${API_PATH}`, { params: arg })
+        this.items = rs.data.items
+        // this.rowsNumber = rs.rowsNumber
         return rs
       } catch (e) { throw e }
     },
-    async getItem(arg?: any): Promise<IResponseList> {
+    async getItem(arg?: any): Promise<Common.IResponseItem> {
       try {
-        const rs: IResponseList = await http.axiosInstance.get(`/${API_PATH}/${arg.id}`, { params: arg })
+        const rs: Common.IResponseItem = await http.get(`/${API_PATH}/${arg.id}`, { params: arg })
         this.item = rs.data
         return rs
       } catch (e) { throw e }
     },
     async create(arg?: any) {
       try {
-        const rs: IResponseItem = await http.axiosInstance.post(`/${API_PATH}`, arg)
+        const rs: Common.IResponseItem = await http.post(`/${API_PATH}`, arg)
         if (rs.status) this.addItems(rs.data)
         return rs
       } catch (e) { throw e }
     },
     async update(arg?: any) {
       try {
-        const rs: IResponseItem = await http.axiosInstance.put(`/${API_PATH}`, arg)
+        const rs: Common.IResponseItem = await http.put(`/${API_PATH}`, arg)
         if (rs.status) this.updateItems(rs.data)
         return rs
       } catch (e) { throw e }
     },
     async updateFlag(arg?: any) {
       try {
-        const rs: IResponseFlag = await http.axiosInstance.patch(`/${API_PATH}`, arg)
+        const rs: Common.IResponseArray = await http.patch(`/${API_PATH}`, arg)
         return rs
       } catch (e) { throw e }
     },
     async setItem(arg?: any) {
       this.item = arg ? { ...arg } : JSON.parse(JSON.stringify(constant))
     },
-    async addItems(arg: any, items?: IModelGroup[]) {
+    async addItems(arg: any, items?: Models.IGroup[]) {
       try {
         if (items) {
           if (Array.isArray(arg)) {
@@ -160,7 +136,7 @@ export const useGroupStore = defineStore('groupStore', {
         }
       } catch (e) { throw e }
     },
-    async updateItems(arg: any, items?: IModelGroup[]) {
+    async updateItems(arg: any, items?: Models.IGroup[]) {
       try {
         if (Array.isArray(arg)) {
           arg.forEach(e => {
@@ -182,7 +158,7 @@ export const useGroupStore = defineStore('groupStore', {
         }
       } catch (e) { throw e }
     },
-    async removeItems(arg: any, items?: IModelGroup[]) {
+    async removeItems(arg: any, items?: Models.IGroup[]) {
       try {
         if (Array.isArray(arg)) {
           arg.forEach(e => {

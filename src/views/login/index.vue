@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useAppStore, useAuthStore } from '@/store'
-import switchLanguage from "@/components/switchLanguage.vue";
-import switchDarkMode from "@/components/switchDarkMode.vue";
+import { useAppStore, useAuthStore } from '@src/store'
+import switchLanguage from "@src/components/switchLanguage.vue";
+import switchDarkMode from "@src/components/switchDarkMode.vue";
 // library core
 const $route = useRoute()
 const $router = useRouter()
@@ -22,7 +22,7 @@ const isLoading = ref(false)
 // Return data for html
 const onSetGlobalData = () => {
   return new Promise(async (resolve, reject) => {
-    if (storeAuth.userInfo) {
+    if (storeAuth.user) {
       // if (!$store.state.types.items) await $store.dispatch('types/getAll')// .then(() => { console.log(store.state.types.items) })
       // if (!$store.state.roles.items) await $store.dispatch('roles/getAll')// .then(() => { console.log(store.state.roles.items) })
     }
@@ -39,7 +39,7 @@ const onCheckCapslock = ({ shiftKey, key } = {} as any) => {
 const onSubmit = async () => {
   isLoading.value = true
   form.value.username = form.value.username.toLowerCase()
-  storeAuth.verify(toRaw(form.value)).then(async rs => {
+  storeAuth.login(toRaw(form.value)).then(async rs => {
     if (rs) {
       const redirect = $route.query && $route.query.redirect ? $route.query.redirect : '/'
       $router.push(redirect.toString()).catch((e) => { })

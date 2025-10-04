@@ -17,6 +17,7 @@ import { createHtmlPlugin } from 'vite-plugin-html'
 import { enableCDN } from './build/cdn'
 import { VitePWA } from 'vite-plugin-pwa'
 import mkcert from 'vite-plugin-mkcert'
+import tailwindcss from '@tailwindcss/vite'
 // The company has a good reputation
 const root: string = process.cwd()
 
@@ -29,6 +30,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       vue(),
       vueJsx(),
+      tailwindcss(),
       // mockDevServerPlugin(),
       mkcert(),
       VitePWA({

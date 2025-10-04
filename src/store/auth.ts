@@ -1,112 +1,94 @@
-import { http } from '@/plugins/http-axios'
-import { router } from '@/router'
-// import { local } from '@/utils/storage'
-import { IUser } from './interfaces/user'
-import { storageLib } from 'tm-libs'
+import { defineStore } from 'pinia'
+import { http } from '@src/plugins/http-axios'
+import { router } from '@src/router'
 
-interface IModel {
-  userInfo: IUser | null
-  accessToken: string,
-  routes: Array<string>
+interface IAuthState {
+  token: string | null
+  user: Models.IUser | null
 }
-const API_PATH = 'auth'
+
+interface ILoginResponse {
+  token: string
+  user: Models.IUser
+}
+
+// interface IRegisterResponse {
+//   user: Models.IUser
+// }
+
+const API_PATH = '/auth'
+
 export const useAuthStore = defineStore('authStore', {
-  // persist: true,
-  state: (): IModel => ({
-    userInfo: storageLib.get('user-info'),
-    accessToken: storageLib.get('access-token') || '',
-    routes: storageLib.get('routes') || []
+  persist: true,
+  state: (): IAuthState => ({
+    token: null,
+    user: null,
   }),
   getters: {
-    /** Are you logged in? */
-    isLogin(state) {
-      return Boolean(state.accessToken)
-    },
+    isLogin: (state) => Boolean(state.token),
   },
   actions: {
-    async verify(arg: any) {
-      let rs
+    async login(payload: { username: string; password: string }) {
       try {
-        if (arg) rs = await http.axiosInstance.post(`/${API_PATH}`, arg)
-        else rs = await http.axiosInstance.get(`/${API_PATH}`, { params: arg })
-        if (rs) {
-          this.handleLoginInfo(rs)
-        } else {
-          this.clearAuthStorage()
-          this.resetRouter()
-        }
-        return rs
-      } catch (e) {
-        // console.log(e)
-        return rs
+        const res = await http.post<ILoginResponse>(API_PATH, payload)
+        this.token = res.token
+        this.user = res.user
+
+        const { query } = unref(router.currentRoute)
+        router.push({ path: (query as any)?.redirect || '/' })
+
+        return true
+      } catch (error: any) {
+        console.error('Login failed:', error.message || error)
+        this.clearAuth()
+        return false
       }
     },
-    /* Log in and out, reset user information, etc. */
+    // async register(payload: {
+    //   username: string
+    //   password: string
+    //   name: string
+    //   email: string
+    //   group?: string
+    // }) {
+    //   try {
+    //     const res = await http.put<IRegisterResponse>(API_PATH, payload)
+    //     return res.user
+    //   } catch (error: any) {
+    //     console.error('Register failed:', error.message || error)
+    //     return null
+    //   }
+    // },
+    async fetchMe() {
+      try {
+        const res = await http.get<{ user: Models.IUser }>(`${API_PATH}/me`)
+        if (res?.user) {
+          this.user = res.user
+          return res.user
+        }
+      } catch (error) {
+        console.error('Fetch me failed:', error)
+        this.clearAuth()
+      }
+      return null
+    },
     async logout() {
+      this.clearAuth()
       const route = unref(router.currentRoute)
-      // Clear local cache
-      this.clearAuthStorage()
-      // Clear route, menu and other data
-      // const routeStore = useRouteStore()
-      // routeStore.resetRouteStore()
-      // Reset current repository
-      this.$reset()
-      // Redirect to login page
+
       if (route.meta.requiresAuth) {
         router.push({
           name: 'login',
-          query: {
-            redirect: route.fullPath,
-          },
+          query: { redirect: route.fullPath },
         })
       }
     },
-    /* Processing the data returned by login */
-    async handleLoginInfo(val) {
-      // Save token and userInfo
-      if (val.data) {
-        this.userInfo = val.data
-        storageLib.set('user-info', val.data)
-      }
-      if (val.accessToken) {
-        this.accessToken = val.accessToken
-        storageLib.set('access-token', val.accessToken)
-      }
-      if (val.routes) {
-        this.routes = val.routes
-        storageLib.set('routes', val.routes)
-      }
-      if (val.refreshToken) {
-        storageLib.set('refresh-token', val.refreshToken)
-      }
-      // Adding Routes and Menus
-      // const routeStore = useRouteStore()
-      // await routeStore.initAuthRoute()
-
-      // Redirect jump
-      const route = unref(router.currentRoute)
-      const query = route.query as { redirect: string }
-      router.push({
-        path: query.redirect || '/',
-      })
+    clearAuth() {
+      this.token = null
+      this.user = null
     },
-    clearAuthStorage() {
-      storageLib.remove('access-token')
-      storageLib.remove('refresh-token')
-      storageLib.remove('user-info')
-      storageLib.remove('routes')
-      this.accessToken = null
-      this.userInfo = null
-      this.routes = []
-
-    },
-    resetRoutes() {
-      if (router.hasRoute('root'))
-        router.removeRoute('root')
-    },
-    // easily reset state using `$reset`
-    clear() {
+    clear() { // easily reset state using `$reset`
       this.$reset()
     }
-  }
+  },
 })

@@ -1,9 +1,9 @@
-import { createMenus, createRoutes, generateCacheRoutes } from '@/plugins/router'
-import { $t } from '@/i18n'
+import { createMenus, createRoutes, generateCacheRoutes } from '@src/plugins/router'
+import { $t } from '@src/i18n'
 import { storageLib } from 'tm-libs'
-import { router } from '@/router'
-import { staticRoutes } from '@/router/routes.static'
-import { useAuthStore } from '@/store/auth'
+import { router } from '@src/router'
+import { staticRoutes } from '@src/router/routes.static'
+import { useAuthStore } from '@src/store/auth'
 
 interface RoutesStatus {
   isInitAuthRoute: boolean

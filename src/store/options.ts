@@ -1,17 +1,4 @@
-import { http } from '@/plugins/http-axios'
-import { ICreated, IMeta, IResponseList, IResponseItem, IResponseFlag } from './interfaces/common'
-
-export interface IModelType {
-  _id?: string
-  key: string
-  code: string
-  name: string
-  desc: string
-  meta: Array<IMeta>
-  order: number
-  flag: number
-  created: ICreated
-}
+import { http } from '@src/plugins/http-axios'
 
 const constant = {
   _id: null,
@@ -25,17 +12,17 @@ const constant = {
   created: { at: null, by: null, ip: null }
 }
 
-const API_PATH = 'types'
-export const useTypeStore = defineStore('typeStore', {
+const API_PATH = 'options'
+export const useTypeStore = defineStore('optionsStore', {
   persist: true,
   state: (): {
     keys: Array<string>
-    all: IModelType[]
-    items: IModelType[]
+    all: Models.Options[]
+    items: Models.Options[]
     rowsNumber: number
     // metaKeys: []
     // metaValues: []
-    item: IModelType
+    item: Models.Options
   } => ({
     keys: [],
     all: [],
@@ -45,35 +32,35 @@ export const useTypeStore = defineStore('typeStore', {
   }),
   getters: {
     getByKey: (state) => {
-      return (key) => state.all.filter(x => x.key == key).sort((a, b) => { return a.order - b.order })
+      return (key) => state.all.filter(x => x.key == key).sort((a, b) => { return a.sort - b.sort })
     }
   },
   actions: {
-    async getAll(arg?: any): Promise<IResponseList> {
+    async getAll(arg?: any): Promise<Common.IResponseItems> {
       try {
-        const rs: IResponseList = await http.axiosInstance.get(`/${API_PATH}/all`, { params: arg })
-        this.all = rs.data.sort((a, b) => { return a.order - b.order }) as IModelType[]
+        const rs: Common.IResponseItems = await http.get(`/${API_PATH}/all`, { params: arg })
+        this.all = rs.data.items.sort((a, b) => { return a.order - b.order }) as Models.Options[]
         return rs
       } catch (e) { throw e }
     },
-    async getItems(arg?: any): Promise<IResponseList> {
+    async getItems(arg?: any): Promise<Common.IResponseItems> {
       try {
-        const rs: IResponseList = await http.axiosInstance.get(`/${API_PATH}`, { params: arg })
+        const rs: Common.IResponseItems = await http.get(`/${API_PATH}`, { params: arg })
         this.items = rs.data
-        this.rowsNumber = rs.rowsNumber
+        // this.rowsNumber = rs.rowsNumber
         return rs
       } catch (e) { throw e }
     },
-    async getItem(arg?: any): Promise<IResponseList> {
+    async getItem(arg?: any): Promise<Common.IResponseItems> {
       try {
-        const rs: IResponseList = await http.axiosInstance.get(`/${API_PATH}/${arg.id}`, { params: arg })
+        const rs: Common.IResponseItems = await http.get(`/${API_PATH}/${arg.id}`, { params: arg })
         this.item = rs.data
         return rs
       } catch (e) { throw e }
     },
     async getKey(arg?: any) {
       try {
-        const rs = await http.axiosInstance.get(`/${API_PATH}/key`, { params: arg })
+        const rs = await http.get(`/${API_PATH}/key`, { params: arg })
         if (!rs) return []
         this.keys = rs.data
         return rs
@@ -81,28 +68,28 @@ export const useTypeStore = defineStore('typeStore', {
     },
     async getMeta(arg?: any) {
       try {
-        const rs = await http.axiosInstance.get(`/${API_PATH}/meta`, { params: arg })
+        const rs = await http.get(`/${API_PATH}/meta`, { params: arg })
         if (rs) return rs.data
         return []
       } catch (e) { throw e }
     },
     async create(arg?: any) {
       try {
-        const rs: IResponseItem = await http.axiosInstance.post(`/${API_PATH}`, arg)
+        const rs: Common.IResponseItem = await http.post(`/${API_PATH}`, arg)
         if (rs.status) this.addItems(rs.data)
         return rs
       } catch (e) { throw e }
     },
     async update(arg?: any) {
       try {
-        const rs: IResponseItem = await http.axiosInstance.put(`/${API_PATH}`, arg)
+        const rs: Common.IResponseItem = await http.put(`/${API_PATH}`, arg)
         if (rs.status) this.updateItems(rs.data)
         return rs
       } catch (e) { throw e }
     },
     async updateFlag(arg?: any) {
       try {
-        const rs: IResponseFlag = await http.axiosInstance.patch(`/${API_PATH}`, arg)
+        const rs: Common.IResponseArray = await http.patch(`/${API_PATH}`, arg)
         // if (rs.status) this.removeItems(rs.success)
         return rs
       } catch (e) { throw e }
@@ -110,7 +97,7 @@ export const useTypeStore = defineStore('typeStore', {
     async setItem(arg?: any) {
       this.item = arg ? { ...arg } : JSON.parse(JSON.stringify(constant))
     },
-    async addItems(arg: any, items?: IModelType[]) {
+    async addItems(arg: any, items?: Models.Options[]) {
       try {
         if (items) {
           if (Array.isArray(arg)) {
@@ -133,12 +120,12 @@ export const useTypeStore = defineStore('typeStore', {
         }
       } catch (e) { throw e }
     },
-    async updateItems(arg: any, items?: IModelType[]) {
+    async updateItems(arg: any, items?: Models.Options[]) {
       try {
         if (Array.isArray(arg)) {
           arg.forEach(e => {
             if (items) {
-              const i = items.findIndex(x => x._id === e._id)
+              const i = items.findIndex((x: any) => x._id === e._id)
               if (i > -1) items.splice(i, 1, e)
             } else {
               let i = this.items.findIndex(x => x._id === e._id)
@@ -155,12 +142,12 @@ export const useTypeStore = defineStore('typeStore', {
         }
       } catch (e) { throw e }
     },
-    async removeItems(arg: any, items?: IModelType[]) {
+    async removeItems(arg: any, items?: Models.Options[]) {
       try {
         if (Array.isArray(arg)) {
           arg.forEach(e => {
             if (items) {
-              let i = items.findIndex(x => x._id === e)
+              let i = items.findIndex((x: any) => x._id === e)
               if (i > -1) items.splice(i, 1)
             } else {
               let i = this.items.findIndex(x => x._id === e)
@@ -171,7 +158,7 @@ export const useTypeStore = defineStore('typeStore', {
           })
         } else {
           if (items) {
-            const i = items.findIndex(x => x._id === arg)
+            const i = items.findIndex((x: any) => x._id === arg)
             if (i > -1) items.splice(i, 1)
           } else {
             let i = this.items.findIndex(x => x._id === arg)

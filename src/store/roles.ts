@@ -1,17 +1,4 @@
-import { http } from '@/plugins/http-axios'
-import { ICreated, IResponseList, IResponseItem, IResponseFlag } from './interfaces/common'
-
-export interface IModelRole {
-  _id?: string
-  key: string
-  name: string
-  desc: string
-  level: number
-  color: string
-  routes: Array<string>
-  flag: number
-  created: ICreated
-}
+import { http } from '@src/plugins/http-axios'
 
 const constant = {
   _id: null,
@@ -29,8 +16,8 @@ const API_PATH = 'roles'
 export const useRoleStore = defineStore('roleStore', {
   persist: true,
   state: (): {
-    items: IModelRole[]
-    item: IModelRole
+    items: Models.IRole[]
+    item: Models.IRole
     // metaKeys: []
     // metaValues: []
   } => ({
@@ -40,49 +27,49 @@ export const useRoleStore = defineStore('roleStore', {
   getters: {
   },
   actions: {
-    async getAll(arg?: any): Promise<IResponseList> {
+    async getAll(arg?: any): Promise<Common.IResponseItems> {
       try {
-        const rs: IResponseList = await http.axiosInstance.get(`/${API_PATH}/all`, { params: arg })
-        this.all = rs.data as IModelRole[]
+        const rs: Common.IResponseItems = await http.get(`/${API_PATH}/all`, { params: arg })
+        this.all = rs.data.items as Models.IRole[]
         return rs
       } catch (e) { throw e }
     },
-    async getItems(arg?: any): Promise<IResponseList> {
+    async getItems(arg?: any): Promise<Common.IResponseItems> {
       try {
-        const rs: IResponseList = await http.axiosInstance.get(`/${API_PATH}`, { params: arg })
+        const rs: Common.IResponseItems = await http.get(`/${API_PATH}`, { params: arg })
         this.items = rs.data
         return rs
       } catch (e) { throw e }
     },
-    async getItem(arg?: any): Promise<IResponseList> {
+    async getItem(arg?: any): Promise<Common.IResponseItems> {
       try {
-        const rs: IResponseList = await http.axiosInstance.get(`/${API_PATH}/${arg.id}`, { params: arg })
+        const rs: Common.IResponseItems = await http.get(`/${API_PATH}/${arg.id}`, { params: arg })
         this.item = rs.data
         return rs
       } catch (e) { throw e }
     },
     async create(arg?: any) {
       try {
-        const rs: IResponseItem = await http.axiosInstance.post(`/${API_PATH}`, arg)
+        const rs: Common.IResponseItem = await http.post(`/${API_PATH}`, arg)
         return rs
       } catch (e) { throw e }
     },
     async update(arg?: any) {
       try {
-        const rs: IResponseItem = await http.axiosInstance.put(`/${API_PATH}`, arg)
+        const rs: Common.IResponseItem = await http.put(`/${API_PATH}`, arg)
         return rs
       } catch (e) { throw e }
     },
     async updateFlag(arg?: any) {
       try {
-        const rs: IResponseFlag = await http.axiosInstance.patch(`/${API_PATH}`, arg)
+        const rs: Common.IResponseArray = await http.patch(`/${API_PATH}`, arg)
         return rs
       } catch (e) { throw e }
     },
     async setItem(arg?: any) {
       this.item = arg ? { ...arg } : JSON.parse(JSON.stringify(constant))
     },
-    async addItems(arg: any, items?: IModelRole[]) {
+    async addItems(arg: any, items?: Models.IRole[]) {
       try {
         if (items) {
           if (Array.isArray(arg)) this.items.concat(arg)
@@ -93,7 +80,7 @@ export const useRoleStore = defineStore('roleStore', {
         }
       } catch (e) { throw e }
     },
-    async updateItems(arg: any, items?: IModelRole[]) {
+    async updateItems(arg: any, items?: Models.IRole[]) {
       try {
         if (Array.isArray(arg)) {
           arg.forEach(e => {
@@ -111,7 +98,7 @@ export const useRoleStore = defineStore('roleStore', {
         }
       } catch (e) { throw e }
     },
-    async removeItems(arg: any, items?: IModelRole[]) {
+    async removeItems(arg: any, items?: Models.IRole[]) {
       try {
         if (Array.isArray(arg)) {
           arg.forEach(e => {

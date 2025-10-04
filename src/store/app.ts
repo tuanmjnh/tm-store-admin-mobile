@@ -1,5 +1,5 @@
-// import { local } from '@/utils/storage'
-import { setLocale } from '@/i18n'
+// import { local } from '@src/utils/storage'
+import { setLocale } from '@src/i18n'
 import moment from 'moment'
 export type TransitionAnimation = '' | 'fade-slide' | 'fade-bottom' | 'fade-scale' | 'zoom-fade' | 'zoom-out'
 export type LayoutMode = 'leftMenu' | 'topMenu' | 'mixMenu'

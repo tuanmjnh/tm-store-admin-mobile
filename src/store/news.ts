@@ -1,29 +1,5 @@
-import { http } from '@/plugins/http-axios'
-import { ICreated, IResponseList, IResponseItem, IResponseFlag, IMeta } from './interfaces/common'
-import { IGoogleFile } from '@/services/google/drive-gapi'
-export interface IModelNews {
-  _id?: string
-  code: string
-  groups: Array<string>
-  title: string
-  desc: string
-  content: string
-  url: string
-  author: string
-  date: Date
-  pins: Array<string>
-  tags: Array<string>
-  attr: Array<IMeta>
-  meta: Array<IMeta>
-  images: Array<IGoogleFile>
-  attach: Array<IGoogleFile>
-  startAt: Date
-  endAt: Date
-  order: number
-  flag: number
-  created: ICreated
-}
-
+import { http } from '@src/plugins/http-axios'
+import { IGoogleFile } from '@src/services/google/drive-gapi'
 const constant = {
   code: null,
   groups: null,
@@ -50,8 +26,8 @@ const API_PATH = 'news'
 export const useNewsStore = defineStore('newsStore', {
   persist: false,
   state: (): {
-    items: IModelNews[]
-    item: IModelNews
+    items: Models.INews[]
+    item: Models.INews
     // metaKeys: []
     // metaValues: []
   } => ({
@@ -61,50 +37,50 @@ export const useNewsStore = defineStore('newsStore', {
   getters: {
   },
   actions: {
-    async getAll(arg?: any): Promise<IResponseList> {
+    async getAll(arg?: any): Promise<Common.IResponseItems> {
       try {
-        const rs: IResponseList = await http.axiosInstance.get(`/${API_PATH}/all`, { params: arg })
-        this.all = rs.data as IModelNews[]
+        const rs: Common.IResponseItems = await http.get(`/${API_PATH}/all`, { params: arg })
+        this.all = rs.data.items as Models.INews[]
         return rs
       } catch (e) { throw e }
     },
-    async getItems(arg?: any): Promise<IResponseList> {
+    async getItems(arg?: any): Promise<Common.IResponseItems> {
       try {
-        const rs: IResponseList = await http.axiosInstance.get(`/${API_PATH}`, { params: arg })
+        const rs: Common.IResponseItems = await http.get(`/${API_PATH}`, { params: arg })
         this.items = rs.data
-        this.rowsNumber = rs.rowsNumber
+        // this.rowsNumber = rs.rowsNumber
         return rs
       } catch (e) { throw e }
     },
-    async getItem(arg?: any): Promise<IResponseList> {
+    async getItem(arg?: any): Promise<Common.IResponseItems> {
       try {
-        const rs: IResponseList = await http.axiosInstance.get(`/${API_PATH}/${arg.id}`, { params: arg })
+        const rs: Common.IResponseItems = await http.get(`/${API_PATH}/${arg.id}`, { params: arg })
         this.item = rs.data
         return rs
       } catch (e) { throw e }
     },
     async create(arg?: any) {
       try {
-        const rs: IResponseItem = await http.axiosInstance.post(`/${API_PATH}`, arg)
+        const rs: Common.IResponseItem = await http.post(`/${API_PATH}`, arg)
         return rs
       } catch (e) { throw e }
     },
     async update(arg?: any) {
       try {
-        const rs: IResponseItem = await http.axiosInstance.put(`/${API_PATH}`, arg)
+        const rs: Common.IResponseItem = await http.put(`/${API_PATH}`, arg)
         return rs
       } catch (e) { throw e }
     },
     async updateFlag(arg?: any) {
       try {
-        const rs: IResponseFlag = await http.axiosInstance.patch(`/${API_PATH}`, arg)
+        const rs: Common.IResponseArray = await http.patch(`/${API_PATH}`, arg)
         return rs
       } catch (e) { throw e }
     },
     async setItem(arg?: any) {
       this.item = arg ? { ...arg } : JSON.parse(JSON.stringify(constant))
     },
-    async addItems(arg: any, items?: IModelNews[]) {
+    async addItems(arg: any, items?: Models.INews[]) {
       try {
         if (items) {
           if (Array.isArray(arg)) this.items.concat(arg)
@@ -115,7 +91,7 @@ export const useNewsStore = defineStore('newsStore', {
         }
       } catch (e) { throw e }
     },
-    async updateItems(arg: any, items?: IModelNews[]) {
+    async updateItems(arg: any, items?: Models.INews[]) {
       try {
         if (Array.isArray(arg)) {
           arg.forEach(e => {
@@ -133,7 +109,7 @@ export const useNewsStore = defineStore('newsStore', {
         }
       } catch (e) { throw e }
     },
-    async removeItems(arg: any, items?: IModelNews[]) {
+    async removeItems(arg: any, items?: Models.INews[]) {
       try {
         if (Array.isArray(arg)) {
           arg.forEach(e => {

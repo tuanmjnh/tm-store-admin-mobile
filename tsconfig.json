@@ -14,7 +14,6 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "sourceMap": true,
-    "baseUrl": ".",
     "allowJs": false,
     "resolveJsonModule": true,
     "strictNullChecks": false,
@@ -28,13 +27,16 @@
     ],
     "paths": {
       "@/*": [
-        "src/*"
+        "./*"
       ],
-      // "@tm-utils/*": [
-      //   "../tm-utils/src/*"
-      // ],
+      "@src/*": [
+        "./src/*"
+      ],
+      "@types/*": [
+        "./../tm-store-api-ts/types/*"
+      ],
       "@build/*": [
-        "build/*"
+        "./build/*"
       ]
     },
     "types": [
@@ -53,10 +55,11 @@
     "src/**/*.vue",
     "src/store/index.ts",
     "vite.config.ts",
-    "src/typings/*.d.ts",
-    "src/typings/auto-imports.d.ts",
-    "src/typings/global.d.ts",
-    "src/typings/app-types.d.ts"
+    "src/types/*.d.ts",
+    "../tm-store-api-ts/types/*.d.ts"
+    // "src/typings/auto-imports.d.ts",
+    // "src/typings/global.d.ts",
+    // "src/typings/app-types.d.ts"
   ],
   "exclude": [
     "dist",

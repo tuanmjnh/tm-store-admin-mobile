@@ -1,62 +1,55 @@
-import Axios, { type AxiosInstance, type AxiosError, type AxiosResponse, type AxiosRequestConfig } from 'axios'
+import axios, {
+  AxiosInstance,
+  AxiosError,
+  AxiosResponse,
+  AxiosRequestConfig,
+  CancelTokenSource
+} from 'axios'
 import NProgress from './progress'
 import { showFailToast } from 'vant'
-import { $t } from '@/i18n'
+import { $t } from '@src/i18n'
 import { storageLib } from 'tm-libs'
-import 'vant/es/toast/style'
 import { useAppStore } from '../store'
+import 'vant/es/toast/style'
 
-export const CANCEL_TOKEN = Axios.CancelToken
-/**
- * @description: ContentType
- */
 export enum ContentTypeEnum {
-  // form-data qs
   FORM_URLENCODED = 'application/x-www-form-urlencoded;charset=UTF-8',
-  // form-data upload
   FORM_DATA = 'multipart/form-data;charset=UTF-8',
-  // json
   JSON = 'application/json;charset=UTF-8'
 }
 
-/**
- * @description: 与后端协定的状态 code
- */
 export enum ResultEnum {
   SUCCESS = 0,
   ERROR = 1
 }
 
-// Default axios instance request configuration
-const configDefault = {
+const defaultConfig: AxiosRequestConfig = {
+  baseURL: import.meta.env.VITE_APP_API,
+  timeout: 15000,
   headers: {
     'Content-Type': ContentTypeEnum.JSON
-  },
-  timeout: 0,
-  baseURL: import.meta.env.VITE_APP_API,
-  data: {}
+  }
 }
 
-// Create API debonce
-let call
+export class Http {
+  private axiosInstance: AxiosInstance
+  private cancelSource?: CancelTokenSource
 
-class Http {
-  // Current instance
-  private static axiosInstance: AxiosInstance
-  // Request Configuration
-  private static axiosConfigDefault: AxiosRequestConfig
+  constructor(config: AxiosRequestConfig = defaultConfig) {
+    this.axiosInstance = axios.create(config)
+    this.setupInterceptors()
+  }
 
-  // Request interception
-  private httpInterceptorsRequest(): void {
-    Http.axiosInstance.interceptors.request.use(
+  /** Setup Interceptors */
+  private setupInterceptors() {
+    this.axiosInstance.interceptors.request.use(
       config => {
         NProgress.start()
         useAppStore().setLoading(config.method)
-        // console.log(config)
-        // Before sending a request, you can carry a token here
-        // Add access-token to headers
-        const accessToken = storageLib.get('access-token')
-        if (accessToken) config.headers['x-access-token'] = `Bearer ${accessToken}`
+        const token = storageLib.get('access-token')
+        if (token) {
+          config.headers['x-access-token'] = `Bearer ${token}`
+        }
         return config
       },
       (error: AxiosError) => {
@@ -65,111 +58,83 @@ class Http {
         return Promise.reject(error)
       }
     )
-  }
 
-  // Response Interception
-  private httpInterceptorsResponse(): void {
-    Http.axiosInstance.interceptors.response.use(
+    this.axiosInstance.interceptors.response.use(
       (res: AxiosResponse) => {
         NProgress.done()
         useAppStore().setLoading()
-        // console.log(appStore.loading)
-        // // Add access-token to headers
-        // const accessToken = storage.get('access-token')
-        // console.log(accessToken)
-        // if (accessToken) res.headers['x-access-token'] = `Bearer ${accessToken}`
-        // The return fields of the contract with the backend
         return res.data
       },
       (error: AxiosError) => {
         NProgress.done()
         useAppStore().setLoading()
-        // Handle HTTP network errors
-        let message = ''
-        // HTTP Status Code
-        const status = error.response?.status
-        switch (status) {
-          case 400:
-            message = $t('http.400', 'Request error')
-            break
-          case 401:
-            message = $t('http.401', 'Unauthorized, please log in')
-            // remove storage access-token and refresh page if 401
-            storageLib.remove('access-token')
-            location.reload()
-            break
-          case 403:
-            message = $t('http.403', 'Access denied')
-            break
-          case 404:
-            message = $t('http.404', `Request address error: ${error.response?.config?.url}`)
-            break
-          case 408:
-            message = $t('http.408', 'Request timeout')
-            break
-          case 500:
-            message = $t('http.500', 'Server internal error')
-            break
-          case 501:
-            message = $t('http.501', 'Service not implemented')
-            break
-          case 502:
-            message = $t('http.502', 'Gateway error')
-            break
-          case 503:
-            message = $t('http.503', 'Service unavailable')
-            break
-          case 504:
-            message = $t('http.504', 'Gateway timeout')
-            break
-          case 505:
-            message = $t('http.505', 'HTTP version not supported')
-            break
-          default:
-            message = $t('http.default', 'Network connection failure')
-        }
-        if (status == 409) { }
-        else showFailToast(message)
+        this.handleError(error)
         return Promise.reject(error.response)
       }
     )
   }
-  public axiosInstance: AxiosInstance
-  constructor(config: AxiosRequestConfig) {
-    Http.axiosConfigDefault = config
-    this.axiosInstance = Http.axiosInstance = Axios.create(config)
-    this.httpInterceptorsRequest()
-    this.httpInterceptorsResponse()
+
+  /** Handle common error messages */
+  private handleError(error: AxiosError) {
+    const status = error.response?.status
+    let message = ''
+
+    switch (status) {
+      case 400: message = $t('http.400', 'Request error'); break
+      case 401:
+        message = $t('http.401', 'Unauthorized, please log in')
+        storageLib.remove('access-token')
+        location.reload()
+        break
+      case 403: message = $t('http.403', 'Access denied'); break
+      case 404: message = $t('http.404', `Not found: ${error.config?.url}`); break
+      case 408: message = $t('http.408', 'Request timeout'); break
+      case 500: message = $t('http.500', 'Internal Server Error'); break
+      default: message = $t('http.default', 'Network connection failure')
+    }
+
+    if (status !== 409) showFailToast(message)
   }
 
-
-  // const apiDebonce = (config = {}) => {
-  //   if (call) call.cancel('canceled')
-  //   call = axios.CancelToken.source()
-  //   config.cancelToken = call.token
-  //   return api(config)
-  // }
-  public debonce = (config = {} as any) => {
-    if (call) call.cancel('canceled')
-    call = Axios.CancelToken.source()
-    config.cancelToken = call.token
-    return this.axiosInstance(config)
+  /** Common request */
+  public async request<T = any>(config: AxiosRequestConfig): Promise<T> {
+    const res = await this.axiosInstance.request<any>(config)
+    return res as T
   }
 
-  // Common request functions
-  public request<T>(paramConfig: AxiosRequestConfig): Promise<T> {
-    const config = { ...Http.axiosConfigDefault, ...paramConfig }
-    return new Promise((resolve, reject) => {
-      Http.axiosInstance
-        .request(config)
-        .then((response: any) => {
-          resolve(response)
-        })
-        .catch(error => {
-          reject(error)
-        })
-    })
+  /** Debounce request (cancel previous) */
+  public debounce<T = any>(config: AxiosRequestConfig): Promise<T> {
+    if (this.cancelSource) this.cancelSource.cancel('Request canceled by debounce.')
+    this.cancelSource = axios.CancelToken.source()
+    config.cancelToken = this.cancelSource.token
+    return this.request<T>(config)
+  }
+
+  /** Helper for GET */
+  public get<T = any>(url: string, params?: any, config?: AxiosRequestConfig) {
+    return this.request<T>({ url, method: 'GET', params, ...config })
+  }
+
+  /** Helper for POST */
+  public post<T = any>(url: string, data?: any, config?: AxiosRequestConfig) {
+    return this.request<T>({ url, method: 'POST', data, ...config })
+  }
+
+  /** Helper for PUT */
+  public put<T = any>(url: string, data?: any, config?: AxiosRequestConfig) {
+    return this.request<T>({ url, method: 'PUT', data, ...config })
+  }
+
+  /** Helper for PATCH */
+  public patch<T = any>(url: string, data?: any, config?: AxiosRequestConfig) {
+    return this.request<T>({ url, method: 'PUT', data, ...config })
+  }
+
+  /** Helper for DELETE */
+  public delete<T = any>(url: string, params?: any, config?: AxiosRequestConfig) {
+    return this.request<T>({ url, method: 'DELETE', params, ...config })
   }
 }
 
-export const http = new Http(configDefault)
+// ✅ Export global instance
+export const http = new Http(defaultConfig)
