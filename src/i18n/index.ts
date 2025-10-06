@@ -1,7 +1,7 @@
 import { createI18n } from 'vue-i18n'
 // import { local } from '@/utils/storage'
-import { storageLib } from 'tm-libs'
-const appStoreLanguage = storageLib.get('appStore.language')
+import { localStorageNormal } from 'tm-libs/storage'
+const appStoreLanguage = localStorageNormal.get('appStore.language')
 const modulesFiles = import.meta.glob('./locales/*.json', { eager: true })
 export const locales = Object.keys(modulesFiles).reduce((locales, currentValue) => {
   const moduleName = currentValue.replace('./locales/', '').replace(/\.\w+$/, '')

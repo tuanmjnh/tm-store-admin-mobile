@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { filesLib, urlsLib } from 'tm-libs'
+import { parseFilePath } from 'tm-libs/files'
+import { matchUrls } from 'tm-libs/urls'
 
 const props = withDefaults(
   defineProps<{
@@ -24,14 +25,15 @@ const text = ref('')
 
 watch(() => text.value, n => {
   if (n) {
-    const urls = urlsLib.matchUrls(n)
+    const urls = matchUrls(n)
     text.value = urls.join('\n')
     const values = []
     for (const u of urls) {
-      const fileNames = filesLib.getFileNameWithoutExtention(u)?.split('/')
+      // const fileNames = filesLib.getFileNameWithoutExtention(u)?.split('/')
+      const file = parseFilePath(u)
       values.pushIfNotExist({
         src: u,
-        name: fileNames[fileNames.length - 1]
+        name: file.fileName
       })
     }
     emit('update:modelValue', values)
@@ -39,7 +41,7 @@ watch(() => text.value, n => {
 }, { immediate: true, deep: true })
 const onChangeValue = (val) => {
   // console.log(matchUrls(val.target.value))
-  emit('update:modelValue', urlsLib.matchUrls(val.target.value))
+  emit('update:modelValue', matchUrls(val.target.value))
 }
 const onSubmit = async () => {
   if (props.modelValue && props.modelValue.length) {

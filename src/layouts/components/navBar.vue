@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import router from '@/router';
-import { $t } from '@/i18n';
-import { useAppStore } from '@/store'
+import router from '@src/router';
+import { $t } from '@src/i18n';
+import { useAppStore } from '@src/store'
 
 const $route = useRoute()
 const storeApp = useAppStore()

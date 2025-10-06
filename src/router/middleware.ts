@@ -1,10 +1,10 @@
 import type { Router } from 'vue-router'
 // import { useAppStore, useAuthStore } from '@/store'
 // import { local } from '@/utils/storage'
-import { storageLib } from 'tm-libs'
-import { $t } from '@/i18n'
-import NProgress from '@/plugins/progress'
-import { initAuthRoutes } from '@/router'
+import { localStorageNormal } from 'tm-libs/storage'
+import { $t } from '@src/i18n'
+import NProgress from '@src/plugins/progress'
+import { initAuthRoutes } from '@src/router'
 
 export function initMiddleware(router: Router) {
   // const appStore = useAppStore()
@@ -19,7 +19,7 @@ export function initMiddleware(router: Router) {
     NProgress.start()
     // local.set('access-token','abc')
     // Determine whether there is a TOKEN and log in for authentication
-    const isLogin = Boolean(storageLib.get('access-token'))
+    const isLogin = Boolean(localStorageNormal.get('authStore.token'))
     if (!isLogin) {
       if (to.name === 'login') next()
 
@@ -30,7 +30,7 @@ export function initMiddleware(router: Router) {
       return false
     }
 
-    const isAppRootRoutes = await initAuthRoutes(storageLib.get('routes'))
+    const isAppRootRoutes = await initAuthRoutes(localStorageNormal.get('authStore.routes'))
     // Determine whether the route is initialized
     if (!isAppRootRoutes) {
       // After dynamic routing is loaded, return to the root routing

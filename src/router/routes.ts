@@ -1,6 +1,6 @@
-import Layout from '@/layouts/index.vue'
+import Layout from '@src/layouts/index.vue'
 import type { RouteRecordRaw } from 'vue-router'
-import Demo from '@/views/demo/index.vue'
+import Demo from '@src/views/demo/index.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -20,7 +20,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'tools',
         name: 'Tools',
-        component: () => import('@/views/tools/index.vue'),
+        component: () => import('@src/views/tools/index.vue'),
         meta: {
           title: 'Tool'
         }
@@ -28,7 +28,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'about',
         name: 'About',
-        component: () => import('@/views/about/index.vue'),
+        component: () => import('@src/views/about/index.vue'),
         meta: {
           title: 'About',
           noCache: true

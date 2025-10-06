@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { imageLib } from 'tm-libs'
+import { lazyLoadImage } from 'tm-libs/images'
 const emit = defineEmits<{
   (e: 'onSelect', value: any): any
   (e: 'onClick', value: any): any
@@ -50,8 +50,8 @@ const props = withDefaults(
     lblCancel: 'Cancel'
   })
 
-onMounted(() => { imageLib.lazyLoadImage('tm-view-box-gallery') })
-watch(() => props.modelValue, n => { imageLib.lazyLoadImage('tm-view-box-gallery') }, { immediate: true, deep: true })
+onMounted(() => { lazyLoadImage('tm-view-box-gallery') })
+watch(() => props.modelValue, n => { lazyLoadImage('tm-view-box-gallery') }, { immediate: true, deep: true })
 
 const isDialogPreview = ref(false)
 const isDialogDelete = ref(false)

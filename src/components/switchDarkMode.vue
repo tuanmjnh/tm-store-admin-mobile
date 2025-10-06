@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useAppStore } from '@/store'
+import { useAppStore } from '@src/store'
 const storeApp = useAppStore()
 </script>
 <template>

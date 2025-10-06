@@ -1,13 +1,13 @@
 <script setup lang="ts">
 // import { computed } from "vue";
-import tabbar from "@/layouts/components/tabBar.vue";
-import NavBar from "@/layouts/components/navBar.vue";
-import cellMenu from "@/layouts/components/cellMenu.vue";
-// import leftMenu from "@/layouts/components/leftMenu.vue";
-// import leftMenuTW from "@/components/leftMenuTW.vue";
+import tabbar from "@src/layouts/components/tabBar.vue";
+import NavBar from "@src/layouts/components/navBar.vue";
+import cellMenu from "@src/layouts/components/cellMenu.vue";
+// import leftMenu from "@src/layouts/components/leftMenu.vue";
+// import leftMenuTW from "@src/components/leftMenuTW.vue";
 
-// import { useCachedViewStoreHook } from "@/store/modules/cachedView";
-// import { useDarkMode } from "@/hooks/useToggleDarkMode";
+// import { useCachedViewStoreHook } from "@src/store/modules/cachedView";
+// import { useDarkMode } from "@src/hooks/useToggleDarkMode";
 
 // const cachedViews = computed(() => {
 //   return useCachedViewStoreHook().cachedViewList;

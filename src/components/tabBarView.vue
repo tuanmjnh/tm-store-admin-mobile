@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { historyBack } from '@/router'
+import { historyBack } from '@src/router'
 
 const props = withDefaults(
   defineProps<{

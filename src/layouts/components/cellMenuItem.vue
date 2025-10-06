@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useAppStore } from '@/store'
-import router from '@/router'
-import { validateLib } from 'tm-libs'
+import { useAppStore } from '@src/store'
+import router from '@src/router'
+import { isExternal } from 'tm-libs/validate'
 import { Icon } from '@iconify/vue'
 
 const appStore = useAppStore()
@@ -22,7 +22,7 @@ function changePage() {
 }
 const onClick = (e) => {
   // console.log(e.path)
-  if (e.meta && e.meta.href && validateLib.isExternal(e.meta.href)) window.open(e.meta.href, '_blank')
+  if (e.meta && e.meta.href && isExternal(e.meta.href)) window.open(e.meta.href, '_blank')
   else {
     const url = props.basePath ? `${props.basePath}/${e.path}` : e.path
     router.push(url).catch(e => { console.log(e) })

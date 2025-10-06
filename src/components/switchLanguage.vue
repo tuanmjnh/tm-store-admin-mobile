@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useAppStore } from '@/store'
-import { languages } from '@/i18n'
+import { useAppStore } from '@src/store'
+import { languages } from '@src/i18n'
 const storeApp = useAppStore()
 const isDialog = ref(false)
 const onSetLanguage = (language) => {
@@ -11,7 +11,7 @@ const onSetLanguage = (language) => {
 <template>
   <!-- <span :class="`fi fi-${storeApp.language}`" @click="isDialog = !isDialog" /> -->
   <icon-park-outline-translate @click="isDialog = !isDialog" />
-  <van-action-sheet v-model:show="isDialog" :cancel-text="$t('global.cancel')" :description="$t('setting.switchTitle')" 
+  <van-action-sheet v-model:show="isDialog" :cancel-text="$t('global.cancel')" :description="$t('setting.switchTitle')"
     close-on-click-action>
     <van-cell-group inset>
       <van-cell v-for="(e, i) in languages" :key="i" @click="onSetLanguage(e)">

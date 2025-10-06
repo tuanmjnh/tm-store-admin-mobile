@@ -1,5 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router'
-import Layout from '@/layouts/index.vue'
+import Layout from '@src/layouts/index.vue'
 const { VITE_APP_HOME_PATH } = import.meta.env
 /* Some fixed routes in the page, error pages, etc. */
 export const rootRoute: RouteRecordRaw = {
@@ -26,7 +26,7 @@ export const routes: RouteRecordRaw[] = [
   {
     name: 'login',
     path: '/login',
-    component: () => import('@/views/login/index.vue'), //Note that the file extension .vue is required
+    component: () => import('@src/views/login/index.vue'), //Note that the file extension .vue is required
     meta: {
       title: 'login',
       withoutTab: true,
@@ -35,7 +35,7 @@ export const routes: RouteRecordRaw[] = [
   {
     name: '403',
     path: '/403',
-    component: () => import('@/views/error/403/index.vue'),
+    component: () => import('@src/views/error/403/index.vue'),
     meta: {
       title: '403',
       withoutTab: true,
@@ -54,7 +54,7 @@ export const routes: RouteRecordRaw[] = [
   {
     name: '500',
     path: '/500',
-    component: () => import('@/views/error/500/index.vue'),
+    component: () => import('@src/views/error/500/index.vue'),
     meta: {
       title: '500',
       icon: 'icon-park-outline:close-wifi',
@@ -64,7 +64,7 @@ export const routes: RouteRecordRaw[] = [
   {
     path: '/:catchAll(.*)*',
     //path: '/:pathMatch(.*)*',
-    component: () => import('@/views/error/404/index.vue'),
+    component: () => import('@src/views/error/404/index.vue'),
     name: '404',
     meta: {
       title: '404',

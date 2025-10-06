@@ -3,7 +3,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'dashboard',
     path: '/dashboard',
-    component: () => import('@/views/dashboard/index.vue'),
+    component: () => import('@src/views/dashboard/index.vue'),
     meta: {
       title: 'dashboard',
       requiresAuth: false,
@@ -16,7 +16,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'search',
     path: '/search',
-    component: () => import('@/views/search/index.vue'),
+    component: () => import('@src/views/search/index.vue'),
     meta: {
       title: 'search',
       requiresAuth: false,
@@ -30,7 +30,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'profile',
     path: '/profile',
-    component: () => import('@/views/profile/index.vue'),
+    component: () => import('@src/views/profile/index.vue'),
     meta: {
       title: 'profile',
       requiresAuth: false,
@@ -44,7 +44,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'profile-infomation',
     path: '/profile/infomation',
-    component: () => import('@/views/profile/infomation.vue'),
+    component: () => import('@src/views/profile/infomation.vue'),
     meta: {
       title: 'infomation',
       requiresAuth: false,
@@ -58,7 +58,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'profile-security',
     path: '/profile/security',
-    component: () => import('@/views/profile/security.vue'),
+    component: () => import('@src/views/profile/security.vue'),
     meta: {
       title: 'security',
       requiresAuth: false,
@@ -72,7 +72,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'profile-security-change-password',
     path: '/profile/security/change-password',
-    component: () => import('@/views/profile/change-password.vue'),
+    component: () => import('@src/views/profile/change-password.vue'),
     meta: {
       title: 'changePassword',
       requiresAuth: false,
@@ -86,7 +86,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'setting',
     path: '/setting',
-    component: () => import('@/views/setting/index.vue'),
+    component: () => import('@src/views/setting/index.vue'),
     meta: {
       title: 'setting',
       requiresAuth: false,
@@ -113,7 +113,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'test1',
     path: '/test/test1',
-    component: () => import('@/views/test/test1/index.vue'),
+    component: () => import('@src/views/test/test1/index.vue'),
     meta: {
       title: 'Multi-level menu demo',
       requiresAuth: true,
@@ -126,7 +126,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'test2',
     path: '/test/test2',
-    component: () => import('@/views/test/test2/index.vue'),
+    component: () => import('@src/views/test/test2/index.vue'),
     meta: {
       title: 'Multi-level menu demo',
       requiresAuth: true,
@@ -139,7 +139,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'test2-detail',
     path: '/test/test2/detail',
-    component: () => import('@/views/test/test2/detail/index.vue'),
+    component: () => import('@src/views/test/test2/detail/index.vue'),
     meta: {
       title: 'Multi-level menu demo',
       requiresAuth: true,
@@ -152,7 +152,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'test3',
     path: '/test/test3',
-    component: () => import('@/views/test/test3/index.vue'),
+    component: () => import('@src/views/test/test3/index.vue'),
     meta: {
       title: 'Multi-level menu demo',
       requiresAuth: true,
@@ -178,7 +178,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'types-list',
     path: '/types/list',
-    component: () => import('@/views/types/list.vue'),
+    component: () => import('@src/views/types/list.vue'),
     meta: {
       title: 'list',
       requiresAuth: true,
@@ -191,7 +191,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'types-add',
     path: '/types/add',
-    component: () => import('@/views/types/add.vue'),
+    component: () => import('@src/views/types/add.vue'),
     meta: {
       title: 'add',
       requiresAuth: true,
@@ -204,7 +204,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'types-edit',
     path: '/types/edit/:id',
-    component: () => import('@/views/types/add.vue'),
+    component: () => import('@src/views/types/add.vue'),
     meta: {
       title: 'edit',
       requiresAuth: true,
@@ -218,7 +218,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'types-trash',
     path: '/types/trash',
-    component: () => import('@/views/types/list.vue'),
+    component: () => import('@src/views/types/list.vue'),
     meta: {
       title: 'trash',
       requiresAuth: true,
@@ -245,7 +245,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'roles-list',
     path: '/roles/list',
-    component: () => import('@/views/roles/list.vue'),
+    component: () => import('@src/views/roles/list.vue'),
     meta: {
       title: 'list',
       requiresAuth: true,
@@ -258,7 +258,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'roles-add',
     path: '/roles/add',
-    component: () => import('@/views/roles/add.vue'),
+    component: () => import('@src/views/roles/add.vue'),
     meta: {
       title: 'add',
       requiresAuth: true,
@@ -271,7 +271,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'roles-edit',
     path: '/roles/edit/:id?',
-    component: () => import('@/views/roles/add.vue'),
+    component: () => import('@src/views/roles/add.vue'),
     meta: {
       title: 'edit',
       requiresAuth: true,
@@ -285,7 +285,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'roles-trash',
     path: '/roles/trash',
-    component: () => import('@/views/roles/list.vue'),
+    component: () => import('@src/views/roles/list.vue'),
     meta: {
       title: 'trash',
       requiresAuth: true,
@@ -312,7 +312,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'users-list',
     path: '/users/list',
-    component: () => import('@/views/users/list.vue'),
+    component: () => import('@src/views/users/list.vue'),
     meta: {
       title: 'list',
       requiresAuth: true,
@@ -325,7 +325,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'users-add',
     path: '/users/add',
-    component: () => import('@/views/users/add.vue'),
+    component: () => import('@src/views/users/add.vue'),
     meta: {
       title: 'add',
       requiresAuth: true,
@@ -338,7 +338,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'users-edit',
     path: '/users/edit/:id?',
-    component: () => import('@/views/users/add.vue'),
+    component: () => import('@src/views/users/add.vue'),
     meta: {
       title: 'edit',
       requiresAuth: true,
@@ -352,7 +352,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'users-trash',
     path: '/users/trash',
-    component: () => import('@/views/users/list.vue'),
+    component: () => import('@src/views/users/list.vue'),
     meta: {
       title: 'trash',
       requiresAuth: true,
@@ -381,7 +381,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'connect-list',
     path: '/connect/list',
-    component: () => import('@/views/connect/index.vue'),
+    component: () => import('@src/views/connect/index.vue'),
     meta: {
       title: 'list',
       requiresAuth: true,
@@ -395,7 +395,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'connect-google-add',
     path: '/connect/google-add',
-    component: () => import('@/views/connect/google-add.vue'),
+    component: () => import('@src/views/connect/google-add.vue'),
     meta: {
       title: 'google-add',
       requiresAuth: true,
@@ -409,7 +409,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'connect-google-remove',
     path: '/connect/google-remove',
-    component: () => import('@/views/connect/google-remove.vue'),
+    component: () => import('@src/views/connect/google-remove.vue'),
     meta: {
       title: 'google-remove',
       requiresAuth: true,
@@ -437,7 +437,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'group-news-list',
     path: '/group-news/list',
-    component: () => import('@/views/groups/list.vue'),
+    component: () => import('@src/views/groups/list.vue'),
     meta: {
       title: 'list',
       label: 'groupNews',
@@ -452,7 +452,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'group-news-add',
     path: '/group-news/add',
-    component: () => import('@/views/groups/add.vue'),
+    component: () => import('@src/views/groups/add.vue'),
     meta: {
       title: 'add',
       label: 'groupNews',
@@ -467,7 +467,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'group-news-edit',
     path: '/group-news/edit/:id?',
-    component: () => import('@/views/groups/add.vue'),
+    component: () => import('@src/views/groups/add.vue'),
     meta: {
       title: 'edit',
       label: 'groupNews',
@@ -483,7 +483,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'group-news-trash',
     path: '/group-news/trash',
-    component: () => import('@/views/groups/list.vue'),
+    component: () => import('@src/views/groups/list.vue'),
     meta: {
       title: 'trash',
       label: 'groupNews',
@@ -512,7 +512,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'news-list',
     path: '/news/list',
-    component: () => import('@/views/news/list.vue'),
+    component: () => import('@src/views/news/list.vue'),
     meta: {
       title: 'list',
       requiresAuth: true,
@@ -525,7 +525,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'news-add',
     path: '/news/add',
-    component: () => import('@/views/news/add.vue'),
+    component: () => import('@src/views/news/add.vue'),
     meta: {
       title: 'add',
       requiresAuth: true,
@@ -538,7 +538,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'news-edit',
     path: '/news/edit/:id?',
-    component: () => import('@/views/news/add.vue'),
+    component: () => import('@src/views/news/add.vue'),
     meta: {
       title: 'edit',
       requiresAuth: true,
@@ -552,7 +552,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'news-trash',
     path: '/news/trash',
-    component: () => import('@/views/news/list.vue'),
+    component: () => import('@src/views/news/list.vue'),
     meta: {
       title: 'trash',
       requiresAuth: true,
@@ -580,7 +580,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'group-product-list',
     path: '/group-product/list',
-    component: () => import('@/views/groups/list.vue'),
+    component: () => import('@src/views/groups/list.vue'),
     meta: {
       title: 'list',
       label: 'groupProduct',
@@ -595,7 +595,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'group-product-add',
     path: '/group-product/add',
-    component: () => import('@/views/groups/add.vue'),
+    component: () => import('@src/views/groups/add.vue'),
     meta: {
       title: 'add',
       label: 'groupProduct',
@@ -610,7 +610,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'group-product-edit',
     path: '/group-product/edit/:id?',
-    component: () => import('@/views/groups/add.vue'),
+    component: () => import('@src/views/groups/add.vue'),
     meta: {
       title: 'edit',
       label: 'groupProduct',
@@ -626,7 +626,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'group-product-trash',
     path: '/group-product/trash',
-    component: () => import('@/views/groups/list.vue'),
+    component: () => import('@src/views/groups/list.vue'),
     meta: {
       title: 'trash',
       label: 'groupProduct',
@@ -655,7 +655,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'product-list',
     path: '/product/list',
-    component: () => import('@/views/products/list.vue'),
+    component: () => import('@src/views/products/list.vue'),
     meta: {
       title: 'list',
       requiresAuth: true,
@@ -668,7 +668,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'product-add',
     path: '/product/add',
-    component: () => import('@/views/products/add.vue'),
+    component: () => import('@src/views/products/add.vue'),
     meta: {
       title: 'add',
       requiresAuth: true,
@@ -681,7 +681,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'product-edit',
     path: '/product/edit/:id?',
-    component: () => import('@/views/products/add.vue'),
+    component: () => import('@src/views/products/add.vue'),
     meta: {
       title: 'edit',
       requiresAuth: true,
@@ -695,7 +695,7 @@ export const staticRoutes: RouteRecordRaw[] = [
   {
     name: 'product-trash',
     path: '/product/trash',
-    component: () => import('@/views/products/list.vue'),
+    component: () => import('@src/views/products/list.vue'),
     meta: {
       title: 'trash',
       requiresAuth: true,

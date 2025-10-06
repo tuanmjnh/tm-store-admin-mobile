@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { GoogleDrive, IGoogleFile } from '@/services/google/drive-gapi'
+import { GoogleDrive, IGoogleFile } from '@src/services/google/drive-gapi'
 
 const props = withDefaults(
   defineProps<{

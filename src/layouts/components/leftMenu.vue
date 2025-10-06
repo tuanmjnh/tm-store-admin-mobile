@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useAppStore } from '@/store'
-import { rootRoute } from '@/router/routes.inner'
+import { useAppStore } from '@src/store'
+import { rootRoute } from '@src/router/routes.inner'
 import leftMenuItem from "./left-menu-item.vue";
 
 const { isLeftMenu } = toRefs(useAppStore())

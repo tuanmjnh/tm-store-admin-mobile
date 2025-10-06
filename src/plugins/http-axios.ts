@@ -8,7 +8,7 @@ import axios, {
 import NProgress from './progress'
 import { showFailToast } from 'vant'
 import { $t } from '@src/i18n'
-import { localStorage } from 'tm-libs/storage'
+import { localStorageNormal } from 'tm-libs/storage'
 // import { useAppStore } from '../store'
 import 'vant/es/toast/style'
 
@@ -46,7 +46,7 @@ export class Http {
       config => {
         NProgress.start()
         // useAppStore().setLoading(config.method)
-        const token = localStorage.get('auth.token')
+        const token = localStorageNormal.get('authStore.token')
         if (token) {
           config.headers['x-access-token'] = `Bearer ${token}`
         }
@@ -83,7 +83,7 @@ export class Http {
       case 400: message = $t('http.400', 'Request error'); break
       case 401:
         message = $t('http.401', 'Unauthorized, please log in')
-        localStorage.remove('auth.token')
+        localStorageNormal.remove('authStore.token')
         location.reload()
         break
       case 403: message = $t('http.403', 'Access denied'); break

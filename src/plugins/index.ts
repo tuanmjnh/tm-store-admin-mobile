@@ -2,7 +2,7 @@ import type { App } from 'vue'
 import moment from 'moment'
 // import { axios, api } from './axios'
 import * as directives from './directive'
-import './prototypes'
+// import './prototypes'
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {

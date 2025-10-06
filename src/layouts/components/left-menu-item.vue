@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useAppStore } from '@/store'
-import router from '@/router';
-import { isExternal } from '@/utils/validate';
+import { useAppStore } from '@src/store'
+import router from '@src/router';
+import { isExternal } from 'tm-libs/validate';
 
 const appStore = useAppStore()
 const props = defineProps({

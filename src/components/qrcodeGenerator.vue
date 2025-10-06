@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import QRCode from 'easyqrcodejs'
-import { cryptoLib } from 'tm-libs'
+import { NewGuid } from 'tm-libs/crypto'
 import { debounce } from 'lodash'
 const emit = defineEmits<{
   (e: 'onInit', values: any): any
@@ -237,7 +237,7 @@ const onCancel = () => {
           </g>
         </svg>
       </button>
-      <button @click="onGenerator(cryptoLib.NewGuid())"
+      <button @click="onGenerator(NewGuid())"
         class="absolute right-1 top-1 rounded bg-slate-800 p-1 border border-transparent text-center text-xs text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
         type="button">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 48 48">

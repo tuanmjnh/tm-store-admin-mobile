@@ -16,7 +16,7 @@ const props = withDefaults(defineProps<{
 <template>
   <van-image v-if="props.src && props.src.length" :width="props.width" :height="props.height" :fit="props.fit"
     :src="props.src" />
-  <img v-else :width="props.width" :height="props.height" src="@/assets/svg/image.svg" />
+  <img v-else :width="props.width" :height="props.height" src="@src/assets/svg/image.svg" />
 </template>
 
 <style scoped></style>

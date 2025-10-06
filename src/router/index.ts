@@ -5,7 +5,7 @@ import { routes, rootRoute } from './routes.inner'
 import { staticRoutes } from './routes.static'
 import { initMiddleware } from './middleware'
 // import { arrayToTree } from '@tm-utils/tree'
-import { arrayToTree } from 'tm-libs'
+import { arrayToTree } from 'tm-libs/array'
 
 export const isInitAuthRoutes = false
 // console.log(routes)
@@ -73,7 +73,7 @@ export const initAuthRoutes = async (authRoutes: Array<string>) => {
       if (x.meta.requiresAuth) return authRoutes.indexOf(x.name.toString()) > -1
       else return true
     })
-    rootRoute.children = arrayToTree(rs, 'meta.parent', 'name')
+    rootRoute.children = arrayToTree(rs, 'name', 'meta.parent')
     router.addRoute(rootRoute)
     // return rootRoute
     // console.log(groupByParents(rs, {}))
@@ -81,7 +81,7 @@ export const initAuthRoutes = async (authRoutes: Array<string>) => {
   return isAppRootRoutes
 }
 
-export const routesTree = arrayToTree(staticRoutes, { parentId: 'meta.parent', id: 'name' })
+export const routesTree = arrayToTree(staticRoutes, 'name', 'meta.parent')
 
 // Install Vue Router
 export async function installRouter(app: App) {

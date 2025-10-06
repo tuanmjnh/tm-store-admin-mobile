@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { validateLib } from 'tm-libs'
+import { isExternal } from 'tm-libs/validate'
 import { computed } from "vue"
 
 interface Props {
@@ -11,7 +11,7 @@ const props = withDefaults(defineProps<Props>(), {
   className: ""
 })
 
-const isExternalIcon = computed(() => validateLib.isExternal(props.name))
+const isExternalIcon = computed(() => isExternal(props.name))
 const iconName = computed(() => `#icon-${props.name}`)
 const svgClass = computed(() => {
   if (props.className) {

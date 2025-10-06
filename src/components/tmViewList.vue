@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import tmSwipe from './tmSwipe.vue'
-import { imageLib } from 'tm-libs'
+import { lazyLoadImage } from 'tm-libs/images'
 const emit = defineEmits<{
   (e: 'onSelect', image: any): void
   (e: 'onPreview', image: any): void
@@ -51,8 +51,8 @@ const props = withDefaults(
     swipeReset: false
   })
 
-onMounted(() => { imageLib.lazyLoadImage('tm-view-list-gallery') })
-watch(() => props.modelValue, n => { imageLib.lazyLoadImage('tm-view-box-gallery') }, { immediate: true, deep: true })
+onMounted(() => { lazyLoadImage('tm-view-list-gallery') })
+watch(() => props.modelValue, n => { lazyLoadImage('tm-view-box-gallery') }, { immediate: true, deep: true })
 
 const isDialogPreview = ref(false)
 const isDialogDelete = ref(false)

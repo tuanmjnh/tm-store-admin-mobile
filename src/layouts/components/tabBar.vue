@@ -1,7 +1,7 @@
 <script setup lang='ts'>
 import { ref, reactive } from 'vue';
-import { $t } from '@/i18n';
-import router from '@/router';
+import { $t } from '@src/i18n';
+import router from '@src/router';
 const $route = useRoute()
 const active = ref($route.name.toString());
 const tabbarData = reactive([
