@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { storageLib } from 'tm-libs'
+import { localStorageNormal } from 'tm-libs/storage'
 import { useAppStore, useAuthStore, useTypeStore, useGroupStore, useConnectsStore } from './store'
 const appStore = useAppStore()
 const authStore = useAuthStore()
@@ -9,10 +9,10 @@ const connectsStore = useConnectsStore()
 onMounted(() => {
   if (authStore.token) {
     // types
-    const typeStoreAll = storageLib.get('typeStore.all')
+    const typeStoreAll = localStorageNormal.get('typeStore.all')
     if (!typeStoreAll || !typeStoreAll.length) typeStore.getAll()
     // groups
-    const groupStoreAll = storageLib.get('groupStore.all')
+    const groupStoreAll = localStorageNormal.get('groupStore.all')
     if (!groupStoreAll || !groupStoreAll.length) groupStore.getAll()
     //Connects
     connectsStore.googleVerifyAccessToken()

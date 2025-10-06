@@ -8,8 +8,8 @@ import axios, {
 import NProgress from './progress'
 import { showFailToast } from 'vant'
 import { $t } from '@src/i18n'
-import { storageLib } from 'tm-libs'
-import { useAppStore } from '../store'
+import { localStorage } from 'tm-libs/storage'
+// import { useAppStore } from '../store'
 import 'vant/es/toast/style'
 
 export enum ContentTypeEnum {
@@ -45,15 +45,15 @@ export class Http {
     this.axiosInstance.interceptors.request.use(
       config => {
         NProgress.start()
-        useAppStore().setLoading(config.method)
-        const token = storageLib.get('access-token')
+        // useAppStore().setLoading(config.method)
+        const token = localStorage.get('auth.token')
         if (token) {
           config.headers['x-access-token'] = `Bearer ${token}`
         }
         return config
       },
       (error: AxiosError) => {
-        useAppStore().setLoading()
+        // useAppStore().setLoading()
         showFailToast(error.message)
         return Promise.reject(error)
       }
@@ -62,12 +62,12 @@ export class Http {
     this.axiosInstance.interceptors.response.use(
       (res: AxiosResponse) => {
         NProgress.done()
-        useAppStore().setLoading()
+        // useAppStore().setLoading()
         return res.data
       },
       (error: AxiosError) => {
         NProgress.done()
-        useAppStore().setLoading()
+        // useAppStore().setLoading()
         this.handleError(error)
         return Promise.reject(error.response)
       }
@@ -83,7 +83,7 @@ export class Http {
       case 400: message = $t('http.400', 'Request error'); break
       case 401:
         message = $t('http.401', 'Unauthorized, please log in')
-        storageLib.remove('access-token')
+        localStorage.remove('auth.token')
         location.reload()
         break
       case 403: message = $t('http.403', 'Access denied'); break
