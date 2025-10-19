@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import treeView from '@/components/tree-view/index.vue'
-import { useRoleStore } from '@/store'
-import { historyBack, routesTree } from '@/router'
-// import { rootRoute } from '@/router/routes.inner'
-import { $t } from '@/i18n'
+import treeView from '@src/components/tree-view/index.vue'
+import { useRoleStore } from '@src/store'
+import { historyBack, routesTree } from '@src/router'
+// import { rootRoute } from '@src/router/routes.inner'
+import { $t } from '@src/i18n'
 import { showNotify } from 'vant'
 const route = useRoute()
 const roleStore = useRoleStore()

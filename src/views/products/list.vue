@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import tabBarView from "@/components/tabBarView.vue"
-import componentGroup from "@/views/groups/groups.vue"
+import tabBarView from "@src/components/tabBarView.vue"
+import componentGroup from "@src/views/groups/groups.vue"
 import componentAdd from "./add.vue"
-import router from '@/router'
-import delay from 'delay'
-import { $t } from '@/i18n'
+import router from '@src/router'
+import { delay } from 'tm-libs/promise'
+import { $t } from '@src/i18n'
 import { debounce } from 'lodash'
-import { useProductStore } from '@/store'
+import { useProductStore } from '@src/store'
 const productStore = useProductStore()
 
 const filter = ref({

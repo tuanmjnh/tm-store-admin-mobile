@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import tabBarView from "@/components/tabBarView.vue"
-import router from '@/router'
-import delay from 'delay'
-import { $t } from '@/i18n'
-import { useNewsStore } from '@/store'
+import tabBarView from "@src/components/tabBarView.vue"
+import router from '@src/router'
+import { $t } from '@src/i18n'
+import { delay } from 'tm-libs/promise'
+import { useNewsStore } from '@src/store'
 const newsStore = useNewsStore()
 const filter = ref({
   text: '',

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import vueQrcodeReader from '@/components/vueQrcodeReader.vue'
-import productsView from '@/views/products/view.vue'
+import vueQrcodeReader from '@src/components/vueQrcodeReader.vue'
+import productsView from '@src/views/products/view.vue'
 import { showNotify } from 'vant'
 import { debounce } from 'lodash'
 // const filterSearch = ref(storeApp.filter)

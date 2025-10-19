@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useUserStore, useAuthStore } from '@/store'
-import { $t } from '@/i18n'
+import { useUserStore, useAuthStore } from '@src/store'
+import { $t } from '@src/i18n'
 import { showNotify } from 'vant'
 import { showDialog } from 'vant'
 const userStore = useUserStore()

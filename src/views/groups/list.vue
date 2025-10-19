@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import tabBarView from "@/components/tabBarView.vue"
-import treeView from '@/components/tree-view/index.vue'
+import tabBarView from "@src/components/tabBarView.vue"
+import treeView from '@src/components/tree-view/index.vue'
 import componentAdd from "./add.vue"
-import router from '@/router'
-import delay from 'delay'
-import { $t } from '@/i18n'
-import { useGroupStore } from '@/store'
-import { treeLib } from 'tm-libs'
+import router from '@src/router'
+import { $t } from '@src/i18n'
+import { useGroupStore } from '@src/store'
+import { arrayToTree } from 'tm-libs/array'
+import { delay } from 'tm-libs/promise'
 const $route = useRoute()
 const groupStore = useGroupStore()
 const filter = ref({
   text: '',
-  type: $route.meta.module,
+  key: $route.meta.module,
   flag: 1,
   page: 1,
   rowsPerPage: 15
@@ -21,7 +21,7 @@ const optionFlag = [
   { text: $t(`global.inactivite`), value: 0 },
 ]
 const all = computed(() => groupStore.all)
-const items = ref(treeLib.arrayToTree(all.value.filter(x => x.flag == filter.value.flag && x.type == filter.value.type), { parentId: 'parent', id: '_id', order: 'order' }))
+const items = ref(arrayToTree(all.value.filter(x => x.flag == filter.value.flag && x.key == filter.value.key), '_id', 'parent'))//'order' 
 const selected = ref([])
 const isLoading = ref(false)
 const isRefresh = ref(false)
@@ -67,7 +67,7 @@ const onGetRoles = (item) => {
 }
 </script>
 <template>
-  <tree-view color="blue" :items="items" id-key="_id" name-key="title" v-model="selected" dense selectable>
+  <tree-view color="blue" :items="(items as any)" id-key="_id" name-key="title" v-model="selected" dense selectable>
     <template #append="props">
       <van-icon id="edit-folder" name="records-o" @click="onEdit(props.item)" />
     </template>

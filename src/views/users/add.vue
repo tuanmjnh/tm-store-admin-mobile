@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { useAppStore, useTypeStore, useRoleStore, useUserStore } from '@/store'
-import { historyBack } from '@/router'
-import { $t } from '@/i18n'
+import { useAppStore, useTypeStore, useRoleStore, useUserStore } from '@src/store'
+import { historyBack } from '@src/router'
+import { $t } from '@src/i18n'
 import { showNotify } from 'vant'
-import { GoogleDrive } from '@/services/google/drive-gapi'
-// const tmFileList = defineAsyncComponent(() => import('@/components/tm-file-list/index.vue'))
-// const tmFileManager = defineAsyncComponent(() => import('@/components/tm-file-manager/index.vue'))
-// const tmUpload = defineAsyncComponent(() => import('@/components/tm-upload/index.vue'))
-// const tmViewBox = defineAsyncComponent(() => import('@/components/tmViewBox.vue'))
-const googleDrive = defineAsyncComponent(() => import('@/components/google-drive.vue'))
-const tmViewList = defineAsyncComponent(() => import('@/components/tmViewList.vue'))
+import { GoogleDrive } from '@src/services/google/drive-gapi'
+// const tmFileList = defineAsyncComponent(() => import('@src/components/tm-file-list/index.vue'))
+// const tmFileManager = defineAsyncComponent(() => import('@src/components/tm-file-manager/index.vue'))
+// const tmUpload = defineAsyncComponent(() => import('@src/components/tm-upload/index.vue'))
+// const tmViewBox = defineAsyncComponent(() => import('@src/components/tmViewBox.vue'))
+const googleDrive = defineAsyncComponent(() => import('@src/components/google-drive.vue'))
+const tmViewList = defineAsyncComponent(() => import('@src/components/tmViewList.vue'))
 
 const route = useRoute()
 const appStore = useAppStore()

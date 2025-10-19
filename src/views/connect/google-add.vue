@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useConnectsStore } from '@/store'
+import { useConnectsStore } from '@src/store'
 const sonnectsStore = useConnectsStore()
-import { GoogleOAuthCallback } from '@/services/google/oauth2'
+import { GoogleOAuthCallback } from '@src/services/google/oauth2'
 GoogleOAuthCallback().then(args => {
   // console.log(args)
   sonnectsStore.googleAuthByCode(args).then(res => {

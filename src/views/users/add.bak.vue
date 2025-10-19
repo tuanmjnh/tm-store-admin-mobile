@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import { useAppStore, useTypeStore, useRoleStore, useUserStore } from '@/store'
-import { historyBack } from '@/router'
-import { $t } from '@/i18n'
+import { useAppStore, useTypeStore, useRoleStore, useUserStore } from '@src/store'
+import { historyBack } from '@src/router'
+import { $t } from '@src/i18n'
 import { showImagePreview } from 'vant'
-import { GoogleDrive } from '@/services/google/drive-gapi'
+import { GoogleDrive } from '@src/services/google/drive-gapi'
 
-// const tmFileList = defineAsyncComponent(() => import('@/components/tm-file-list/index.vue'))
-// const tmFileManager = defineAsyncComponent(() => import('@/components/tm-file-manager/index.vue'))
-// const tmUpload = defineAsyncComponent(() => import('@/components/tm-upload/index.vue'))
-// const tmViewBox = defineAsyncComponent(() => import('@/components/tmViewBox.vue'))
-const tmViewList = defineAsyncComponent(() => import('@/components/tmViewList.vue'))
+// const tmFileList = defineAsyncComponent(() => import('@src/components/tm-file-list/index.vue'))
+// const tmFileManager = defineAsyncComponent(() => import('@src/components/tm-file-manager/index.vue'))
+// const tmUpload = defineAsyncComponent(() => import('@src/components/tm-upload/index.vue'))
+// const tmViewBox = defineAsyncComponent(() => import('@src/components/tmViewBox.vue'))
+const tmViewList = defineAsyncComponent(() => import('@src/components/tmViewList.vue'))
 
 const GDrive = new GoogleDrive()
 // GDrive.getFolders()
-GDrive.getFiles({ folderName: '5eccbc9e9071001d87fd4df1', isFolder: false,parents:'root' }).then(x=>{
+GDrive.getFiles({ folderName: '5eccbc9e9071001d87fd4df1', isFolder: false, parents: 'root' }).then(x => {
 })
 // GDrive.getFile({ folderName: 'Capture.PNG' }).then(x => {
 //   console.log(x)
@@ -150,7 +150,7 @@ const onDeleteIamge = (img) => {
           <van-field is-link readonly name="gender" :label="$t('user.gender')"
             :placeholder="$t('global.inputPlaceholder')" @click="showGender = true">
             <template #input>
-              {{ genders?.find(x => x.value == form.gender)?.text }}
+              {{genders?.find(x => x.value == form.gender)?.text}}
             </template>
           </van-field>
           <van-field name="verified" :label="$t('user.verified')" :placeholder="$t('global.inputPlaceholder')">

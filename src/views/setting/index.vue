@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useAuthStore, useAppStore } from '@/store'
-import { languages } from '@/i18n'
+import { useAuthStore, useAppStore } from '@src/store'
+import { languages } from '@src/i18n'
 const authStore = useAuthStore()
 const storeApp = useAppStore()
 const isDialogLanguage = ref(false)

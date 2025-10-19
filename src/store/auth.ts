@@ -3,13 +3,10 @@ import { http } from '@src/plugins/http-axios'
 import { router } from '@src/router'
 
 interface IAuthState {
-  token: string | null
   user: Models.IUser | null
-}
-
-interface ILoginResponse {
-  token: string
-  user: Models.IUser
+  routes: string[] | null
+  accessToken?: string | null
+  refreshToken?: string | null
 }
 
 // interface IRegisterResponse {
@@ -21,19 +18,22 @@ const API_PATH = '/auth'
 export const useAuthStore = defineStore('authStore', {
   persist: true,
   state: (): IAuthState => ({
-    token: null,
     user: null,
+    routes: [],
+    accessToken: null,
+    refreshToken: null
   }),
   getters: {
-    isLogin: (state) => Boolean(state.token),
+    isLogin: (state) => Boolean(state.accessToken),
   },
   actions: {
-    async login(payload: { username: string; password: string }) {
+    async login(params: { username: string; password: string, remember: boolean }) {
       try {
-        const res = await http.post<ILoginResponse>(API_PATH, payload)
-        this.token = res.token
+        const res = await http.post<Common.IResponseAuth>(API_PATH, params)
         this.user = res.user
-
+        this.accessToken = res.accessToken
+        this.refreshToken = res.refreshToken
+        this.routes = res.routes
         const { query } = unref(router.currentRoute)
         router.push({ path: (query as any)?.redirect || '/' })
 

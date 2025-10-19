@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import { useAppStore, useTypeStore, useGroupStore, useProductStore } from '@/store'
-import { historyBack } from '@/router'
-import { $t } from '@/i18n'
+import { useAppStore, useTypeStore, useGroupStore, useProductStore } from '@src/store'
+import { historyBack } from '@src/router'
+import { $t } from '@src/i18n'
 import { showNotify } from 'vant'
 import { MdEditor } from 'md-editor-v3'
-import { GoogleDrive } from '@/services/google/drive-gapi'
-import componentGroup from "@/views/groups/groups.vue"
-import googleDriveUpload from "@/components/google-drive-upload.vue"
-import vueQrcodeReader from '@/components/vueQrcodeReader.vue'
-import { cryptoLib } from 'tm-libs'
+import { GoogleDrive } from '@src/services/google/drive-gapi'
+import componentGroup from "@src/views/groups/groups.vue"
+import googleDriveUpload from "@src/components/google-drive-upload.vue"
+import vueQrcodeReader from '@src/components/vueQrcodeReader.vue'
+import { NewGuid } from 'tm-libs/crypto'
 const componentTypes = defineAsyncComponent(() => import('./types.vue'))
-const googleDrive = defineAsyncComponent(() => import('@/components/google-drive.vue'))
-const uploadImageLinks = defineAsyncComponent(() => import('@/components/upload-image-links.vue'))
-const qrcodeGenerator = defineAsyncComponent(() => import('@/components/qrcodeGenerator.vue'))
-const barcodeGenerator = defineAsyncComponent(() => import('@/components/barcodeGenerator.vue'))
+const googleDrive = defineAsyncComponent(() => import('@src/components/google-drive.vue'))
+const uploadImageLinks = defineAsyncComponent(() => import('@src/components/upload-image-links.vue'))
+const qrcodeGenerator = defineAsyncComponent(() => import('@src/components/qrcodeGenerator.vue'))
+const barcodeGenerator = defineAsyncComponent(() => import('@src/components/barcodeGenerator.vue'))
 
 const emit = defineEmits<{
   (e: 'onClose', value: any): any,
@@ -118,7 +118,7 @@ const onQRCodeError = (args) => {
   showNotify({ type: 'danger', message: `[${args.name}] - ${args.value}` })
 }
 const onChangeCode = () => {
-  form.value.code = cryptoLib.NewGuid().split('-')[0].toUpperCase()
+  form.value.code = NewGuid().split('-')[0].toUpperCase()
 }
 const onBack = () => {
   if (props.isDialog) emit('onClose', true)
@@ -160,7 +160,7 @@ const onSubmit = async () => {
             :rules="[{ required: true, message: $t('error.required') }, { validator: (v) => !!v, message: $t('error.required') }]"
             @click="isDialogGroup = true">
             <template #input>
-              {{ groups && groups.length ? groups.map(x => x.title).join(', ') : $t('group.select') }}
+              {{groups && groups.length ? groups.map(x => x.title).join(', ') : $t('group.select')}}
             </template>
           </van-field>
           <van-field v-model="form.unit" name="unit" :label="$t('global.unit')" is-link
@@ -173,8 +173,8 @@ const onSubmit = async () => {
           <van-field name="types" :label="$t('product.type')" is-link :placeholder="$t('global.inputPlaceholder')"
             @click="onEditType(0)">
             <template #input>
-              {{ form.types && form.types.length ? form.types.map(x => x.label).join(', ') :
-                $t('product.addGroupType') }}
+              {{form.types && form.types.length ? form.types.map(x => x.label).join(', ') :
+                $t('product.addGroupType')}}
               <!-- {{ form.types.length ? form.types.map(x => x.label).join(', ') : $t('global.updating') }} -->
             </template>
           </van-field>

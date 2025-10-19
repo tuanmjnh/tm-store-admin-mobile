@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import componentGroup from "@/views/groups/groups.vue"
+import componentGroup from "@src/views/groups/groups.vue"
 import { showNotify } from 'vant'
-import { useGroupStore, useAppStore } from '@/store'
-import { historyBack } from '@/router'
-import { $t } from '@/i18n'
+import { useGroupStore, useAppStore } from '@src/store'
+import { historyBack } from '@src/router'
+import { $t } from '@src/i18n'
 import { MdEditor } from 'md-editor-v3'
 
 const emit = defineEmits<{
@@ -41,7 +41,7 @@ const onBack = () => {
 const onSubmit = async () => {
   try {
     form.value.parent = groupParent.value._id
-    form.value.type = $route.meta.module as string
+    form.value.key = $route.meta.module as string
     if (form.value._id) {
       const rs = await groupStore.update(form.value)
       if (rs.data) showNotify({ type: 'success', message: $t('success.update') })
@@ -74,7 +74,7 @@ const onSubmit = async () => {
         :placeholder="$t('global.inputPlaceholder')" :rules="[{ required: true, message: $t('error.required') }]" />
       <van-field v-model="form.level" name="level" :label="$t('global.level')" type="number"
         :placeholder="$t('global.inputPlaceholder')" :rules="[{ required: true, message: $t('error.required') }]" />
-      <van-field v-model="form.order" name="order" :label="$t('global.order')" type="number"
+      <van-field v-model="form.sort" name="order" :label="$t('global.order')" type="number"
         :placeholder="$t('global.inputPlaceholder')" :rules="[{ required: true, message: $t('error.required') }]" />
       <van-field v-model="form.icon" name="icon" :label="$t('global.icon')"
         :placeholder="$t('global.inputPlaceholder')" />

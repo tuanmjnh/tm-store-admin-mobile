@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import moment from 'moment'
-import { useAppStore, useAuthStore } from '@/store'
+import { useAppStore, useAuthStore } from '@src/store'
 const storeApp = useAppStore()
 const authStore = useAuthStore()
 const userInfo = computed(() => authStore.userInfo || {} as any)

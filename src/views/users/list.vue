@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import tabBarView from "@/components/tabBarView.vue"
-import router from '@/router'
-import delay from 'delay'
+import tabBarView from "@src/components/tabBarView.vue"
+import router from '@src/router'
+import { delay } from 'tm-libs/promise'
 import { Icon } from '@iconify/vue'
-import { $t } from '@/i18n'
+import { $t } from '@src/i18n'
 import { showNotify } from 'vant'
-import { useUserStore } from '@/store'
+import { useUserStore } from '@src/store'
 const userStore = useUserStore()
 const filter = ref({
   text: '',

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { showNotify } from 'vant'
-import { useTypeStore } from '@/store'
-import { historyBack } from '@/router'
-import { $t } from '@/i18n'
+import { useTypeStore } from '@src/store'
+import { historyBack } from '@src/router'
+import { $t } from '@src/i18n'
 
 const typeStore = useTypeStore()
 const form = computed(() => typeStore.item)

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import tabBarView from "@/components/tabBarView.vue";
-import router from '@/router'
-import { $t } from '@/i18n'
-import { useRoleStore } from '@/store'
-import delay from 'delay'
+import tabBarView from "@src/components/tabBarView.vue";
+import router from '@src/router'
+import { $t } from '@src/i18n'
+import { useRoleStore } from '@src/store'
+import { delay } from 'tm-libs/promise'
 const roleStore = useRoleStore()
 
 const filter = ref({

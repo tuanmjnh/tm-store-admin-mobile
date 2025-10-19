@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import delay from 'delay'
-import { $t } from '@/i18n'
-import { useGroupStore, useProductStore, IModelProduct } from '@/store'
-import { GoogleDrive } from '@/services/google/drive-gapi'
+import { delay } from 'tm-libs/promise'
+import { $t } from '@src/i18n'
+import { useGroupStore, useProductStore } from '@src/store'
+import { GoogleDrive } from '@src/services/google/drive-gapi'
 const productStore = useProductStore()
 const groupStore = useGroupStore()
 const GDrive = new GoogleDrive()
@@ -363,7 +363,7 @@ const onSelectTypeOption = (arg, index) => {
             <van-cell :title="itemSelected.title" :label="itemSelected.code" />
             <van-cell :title="$t('group.title')">
               <template #value>
-                {{ groups && groups.length ? groups.map(x => x.title).join(', ') : $t('global.updating') }}
+                {{groups && groups.length ? groups.map(x => x.title).join(', ') : $t('global.updating')}}
               </template>
             </van-cell>
             <van-cell :title="$t('global.unit')" :value="itemSelected.unit" />

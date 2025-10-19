@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import leftMenu from "@/layouts/components/leftMenu.vue";
-import Chart from '@/components/charts/index.vue'
-import { $t } from '@/i18n'
+import leftMenu from "@src/layouts/components/leftMenu.vue";
+import Chart from '@src/components/charts/index.vue'
+import { $t } from '@src/i18n'
 const barOption = {
   title: {},
   tooltip: {},

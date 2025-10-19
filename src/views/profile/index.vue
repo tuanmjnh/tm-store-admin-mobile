@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useAuthStore } from '@/store'
+import { useAuthStore } from '@src/store'
 const $router = useRouter()
 const authStore = useAuthStore()
 const isDialogLogout = ref(false)

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import tabBarView from "@/components/tabBarView.vue"
-import { GoogleOAuthSignIn } from '@/services/google/oauth2'
-import { useAuthStore, useAppStore, useConnectsStore } from '@/store'
-import { $t } from '@/i18n'
-import svgImage from '@/components/svgImage.vue'
+import tabBarView from "@src/components/tabBarView.vue"
+import { GoogleOAuthSignIn } from '@src/services/google/oauth2'
+import { useAuthStore, useAppStore, useConnectsStore } from '@src/store'
+import { $t } from '@src/i18n'
+import svgImage from '@src/components/svgImage.vue'
 const authStore = useAuthStore()
 const appStore = useAppStore()
 const connectsStore = useConnectsStore()

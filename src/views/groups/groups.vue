@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import treeView from '@/components/tree-view/index.vue'
-import { useGroupStore } from '@/store'
-import { treeLib } from "tm-libs"
-import { $t } from '@/i18n'
+import treeView from '@src/components/tree-view/index.vue'
+import { useGroupStore } from '@src/store'
+import { arrayToTree } from "tm-libs/array"
+import { $t } from '@src/i18n'
 const $route = useRoute()
 const groupStore = useGroupStore()
 
@@ -16,7 +16,7 @@ const props = withDefaults(
   defineProps<{
     text: string
     flag: number
-    type: string | any,
+    key: string | any,
     selected?: Array<any> | undefined,
     root?: boolean,
     isBot?: boolean,
@@ -27,7 +27,7 @@ const props = withDefaults(
   {
     text: '',
     flag: 1,
-    type: 'product',
+    key: 'product',
     selected: null,
     root: true,
     isBot: false,
@@ -37,7 +37,7 @@ const props = withDefaults(
   })
 const treeSelected = ref(props.selected ? props.selected : [])
 const all = computed(() => groupStore.all)
-const items = ref(treeLib.arrayToTree(all.value.filter(x => x.flag == props.flag && x.type == props.type), { parentId: 'parent', id: '_id', order: 'order' }))
+const items = ref(arrayToTree(all.value.filter(x => x.flag == props.flag && x.key == props.key), '_id', 'parent'))//, 'order'
 const groupRoot = groupStore.root
 groupRoot.title = $t('group.root', 'Root')
 if (props.root) items.value.unshift(groupRoot)
@@ -54,7 +54,7 @@ const onCancel = async (arg) => {
 </script>
 <template>
   <div class="overscroll-none overflow-auto content mt-3">
-    <tree-view v-model="treeSelected" :items="items" id-key="_id" name-key="title" dense open-all
+    <tree-view v-model="treeSelected" :items="(items as any)" id-key="_id" name-key="title" dense open-all
       :selectable="selected ? true : false" :selection-mode="selectionMode" color="blue" @on-click="onSelect">
       <!-- <template #append="props">
         <van-icon id="edit-folder" name="records-o" @click="onSelect(props.item)" />

@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { IModelProduct } from '@/store/products'
-import { useProductStore } from '@/store'
-import { numberLib } from 'tm-libs'
+import { useProductStore } from '@src/store'
+import { numberFormat } from 'tm-libs/number'
 const emit = defineEmits<{
   (e: 'onClose', value: any): any,
   (e: 'onUpdate', value: any): any,
@@ -9,7 +8,7 @@ const emit = defineEmits<{
   (e: 'update:typeView', value: number): number
 }>()
 const props = defineProps<{
-  modelValue: IModelProduct
+  modelValue: Models.IProduct
   typeView: number
 }>()
 
@@ -164,7 +163,7 @@ const onUpdateAll = () => {
                 <label
                   class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                   {{ $t('product.priceImport') }} -
-                  {{ numberLib.numberFormat(modelValue.typeData[e.id].priceImport) }}
+                  {{ numberFormat(modelValue.typeData[e.id].priceImport) }}
                 </label>
               </div>
               <div class="relative z-0 w-full mb-5 group">
@@ -174,7 +173,7 @@ const onUpdateAll = () => {
                 <label
                   class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                   {{ $t('product.priceSale') }} -
-                  {{ numberLib.numberFormat(modelValue.typeData[e.id].price) }}
+                  {{ numberFormat(modelValue.typeData[e.id].price) }}
                 </label>
               </div>
               <div class="relative z-0 w-full mb-5 group">
@@ -184,7 +183,7 @@ const onUpdateAll = () => {
                 <label
                   class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                   {{ $t('product.quantity') }} -
-                  {{ numberLib.numberFormat(modelValue.typeData[e.id].quantity) }}
+                  {{ numberFormat(modelValue.typeData[e.id].quantity) }}
                 </label>
               </div>
             </div>
@@ -210,7 +209,7 @@ const onUpdateAll = () => {
                 <label
                   class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                   {{ $t('product.priceImport') }} -
-                  {{ numberLib.numberFormat(modelValue.typeData[typeSelected.id][e.id].priceImport) }}
+                  {{ numberFormat(modelValue.typeData[typeSelected.id][e.id].priceImport) }}
                 </label>
               </div>
               <div class="relative z-0 w-full mb-5 group">
@@ -220,7 +219,7 @@ const onUpdateAll = () => {
                 <label
                   class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                   {{ $t('product.priceSale') }} -
-                  {{ numberLib.numberFormat(modelValue.typeData[typeSelected.id][e.id].price) }}
+                  {{ numberFormat(modelValue.typeData[typeSelected.id][e.id].price) }}
                 </label>
               </div>
               <div class="relative z-0 w-full mb-5 group">
@@ -230,7 +229,7 @@ const onUpdateAll = () => {
                 <label
                   class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                   {{ $t('product.quantity') }} -
-                  {{ numberLib.numberFormat(modelValue.typeData[typeSelected.id][e.id].quantity) }}
+                  {{ numberFormat(modelValue.typeData[typeSelected.id][e.id].quantity) }}
                 </label>
               </div>
             </div>
@@ -277,7 +276,7 @@ const onUpdateAll = () => {
               required />
             <label
               class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-              {{ $t('product.priceImport') }} - {{ numberLib.numberFormat(formUpdateAll.priceImport) }}
+              {{ $t('product.priceImport') }} - {{ numberFormat(formUpdateAll.priceImport) }}
             </label>
           </div>
           <div class="relative z-0 w-full mb-5 group">
@@ -286,7 +285,7 @@ const onUpdateAll = () => {
               required />
             <label
               class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-              {{ $t('product.priceSale') }} - {{ numberLib.numberFormat(formUpdateAll.price) }}
+              {{ $t('product.priceSale') }} - {{ numberFormat(formUpdateAll.price) }}
             </label>
           </div>
           <div class="relative z-0 w-full mb-5 group">
@@ -295,7 +294,7 @@ const onUpdateAll = () => {
               required />
             <label
               class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-              {{ $t('product.quantity') }} - {{ numberLib.numberFormat(formUpdateAll.quantity) }}
+              {{ $t('product.quantity') }} - {{ numberFormat(formUpdateAll.quantity) }}
             </label>
           </div>
         </div>

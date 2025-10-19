@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import tabBarView from "@/components/tabBarView.vue";
-import router from '@/router'
-import { $t } from '@/i18n'
-import { useTypeStore } from '@/store'
-import delay from 'delay'
-import { Pagination } from '@/utils/pagination'
+import tabBarView from "@src/components/tabBarView.vue";
+import router from '@src/router'
+import { $t } from '@src/i18n'
+import { useTypeStore } from '@src/store'
+import { TMPagination } from 'tm-libs/pagination'
+import { delay } from 'tm-libs/promise'
 const typeStore = useTypeStore()
 
 onMounted(() => {
@@ -40,13 +40,13 @@ const onLoadData = async () => {
     isRefresh.value = false
   }
   //Get and push row to data
-  const page = Pagination({ items: all.value, offset: filter.value.page, limit: filter.value.rowsPerPage })
-  items.value = items.value.concat(page.data)//all.value, filter.value.page, filter.value.rowsPerPage))
+  const page = TMPagination(all.value, filter.value.page, filter.value.rowsPerPage)
+  items.value = items.value.concat(page.items)//all.value, filter.value.page, filter.value.rowsPerPage))
   filter.value.page++
   isLoading.value = false
 
   //Load all row Finished
-  if (items.value.length >= page.rowsNumber) isFinished.value = true//all.value.length
+  if (items.value.length >= page.total) isFinished.value = true//all.value.length
 }
 
 const onRefresh = () => {
@@ -56,7 +56,7 @@ const onRefresh = () => {
 }
 const onChangeFlag = () => {
   console.log(filter.value.flag)
-  
+
   // filter.value.flag = filter.value.flag == 0 ? 1 : 0
 }
 const onBackPage = () => {
